@@ -47,7 +47,7 @@ class Graph(HasTraits):
     # outEdges(outNodeName: string, inNodeName?: string): Edge[]|undefined;
     # removeEdge(outNodeName: string, inNodeName: string): Graph;
     # setDefaultEdgeLabel(callback: string|((v: string, w: string, name?: string) => string|Label)): Graph;
-    def setEdge(self, edge_or_node1, node2=None, label=""):
+    def setEdge(self, edge_or_node1, node2=None, label="", **attrs):
         if isinstance(edge_or_node1, Edge):
             if edge_or_node1.v not in self.nodes:
                 self.setNode(edge_or_node1.v)
@@ -63,7 +63,7 @@ class Graph(HasTraits):
         if not isinstance(node2, Node):
             node2 = self.setNode(node2)
 
-        edge = Edge(node1, node2, label)
+        edge = Edge(node1, node2, label=label, attrs=attrs)
         edge._setGraph(self)
         self.edges.append(edge)
         self.post({"type": "setEdge",
@@ -88,11 +88,26 @@ class Graph(HasTraits):
     # removeNode(name: string): Graph;
     # setDefaultNodeLabel(callback: string|((nodeId: string) => string|Label)): Graph;
 
-    def setNode(self, node):
+    def setNode(self, node, **attrs):
         if not isinstance(node, Node):
-            node = Node(node)
+            # find existing
+            for n in self.nodes:
+                if n.name == node:
+                    node = n
+                    break
+            # doesnt exist, make new
+            if not isinstance(node, Node):
+                node = Node(node, attrs=attrs)
+                self.nodes.append(node)
+            else:
+                node.attrs.update(attrs)
+        else:
+            if node not in self.nodes:
+                self.nodes.append(node)
+            else:
+                node.attrs.update(attrs)
+
         node._setGraph(self)
-        self.nodes.append(node)
         self.post({"type": "setNode",
                    "source": node.to_dict()})
         return node
@@ -146,3 +161,13 @@ class Graph(HasTraits):
     @observe('attrs')
     def _observe_attrs(self, change):
         self._notify_change(self, 'attrs', change['new'])
+
+    def to_dict(self):
+        ret = {}
+        ret["directed"] = self.directed
+        ret["multigraph"] = self.multigraph
+        ret["compound"] = self.compound
+        ret["attrs"] = self.attrs
+        ret["nodes"] = [n.to_dict() for n in self.nodes]
+        ret["edges"] = [e.to_dict() for e in self.edges]
+        return ret

@@ -1,3 +1,25 @@
-.custom-widget {
-  background-color: blue;
+div.dagred3 {
+  min-height: 600px;
+  min-width: 800px;
+  /* resize: both; */
+}
+
+div.dagred3 svg {
+  height: 600px;
+  width: 800px;
+}
+
+.dagred3 .node rect {
+  stroke: #333;
+  fill: #fff;
+}
+
+.dagred3 .edgePath path {
+  stroke: #333;
+  fill: #333;
+  stroke-width: 1.5px;
+}
+
+.dagred3 .node text {
+  pointer-events: none;
 }

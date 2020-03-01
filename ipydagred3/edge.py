@@ -57,8 +57,8 @@ class Edge(HasTraits):
         ret = {}
         ret["v"] = self.v.to_dict()
         ret["w"] = self.w.to_dict()
-        ret["label"] = self.label
         ret["attrs"] = self.attrs
-        ret["labelpos"] = self.labelpos
-        ret["labeloffset"] = self.labeloffset
+        ret["attrs"]["label"] = self.label
+        ret["attrs"]["labelpos"] = self.labelpos
+        ret["attrs"]["labeloffset"] = self.labeloffset
         return ret
