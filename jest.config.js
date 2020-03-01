@@ -10,6 +10,6 @@ module.exports = {
   },
   preset: 'ts-jest',
   "transformIgnorePatterns": [
-    "/node_modules/(?!@jupyterlab)"
+    "/node_modules/(?!@jupyter*)",
   ]
 };

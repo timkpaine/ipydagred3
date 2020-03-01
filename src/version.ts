@@ -1,5 +1,5 @@
 // tslint:disable-next-line: no-var-requires
-let data = require("../package.json");
+const data = require("../package.json");
 
 /**
  * The _model_module_version/_view_module_version this package implements.
@@ -8,8 +8,3 @@ let data = require("../package.json");
  * version number.
  */
 export const MODULE_VERSION = data.version;
-
-/*
- * The current package name.
- */
-export const MODULE_NAME = data.name;

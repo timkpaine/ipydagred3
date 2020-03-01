@@ -13,7 +13,7 @@ import {
 import * as widgetExports from './widget';
 
 import {
-  MODULE_NAME, MODULE_VERSION
+  MODULE_VERSION
 } from './version';
 
 const EXTENSION_ID = 'ipydagred3:plugin';
@@ -36,7 +36,7 @@ export default examplePlugin;
  */
 function activateWidgetExtension(app: Application<Widget>, registry: IJupyterWidgetRegistry): void {
   registry.registerWidget({
-    name: MODULE_NAME,
+    name: "ipydagred3",
     version: MODULE_VERSION,
     exports: widgetExports,
   });
