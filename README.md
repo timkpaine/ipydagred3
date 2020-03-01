@@ -1,7 +1,7 @@
 
 # ipydagred3
 
-A Custom Jupyter Widget Library
+ipywidgets wrapper around [dagre-d3](https://github.com/dagrejs/dagre-d3)
 
 [![Build Status](https://dev.azure.com/tpaine154/jupyter/_apis/build/status/timkpaine.ipydagred3?branchName=master)](https://dev.azure.com/tpaine154/jupyter/_build/latest?definitionId=22&branchName=master)
 [![Coverage](https://img.shields.io/azure-devops/coverage/tpaine154/jupyter/22)](https://dev.azure.com/tpaine154/jupyter/_build?definitionId=22&_a=summary)
