@@ -3,6 +3,13 @@
 
 A Custom Jupyter Widget Library
 
+[![PyPI](https://img.shields.io/pypi/l/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
+[![PyPI](https://img.shields.io/pypi/v/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
+[![npm](https://img.shields.io/npm/v/ipydagred3.svg)](https://www.npmjs.com/package/ipydagred3)
+
+
+![](https://raw.githubusercontent.com/timkpaine/ipydagred3/master/docs/img/example.gif)
+
 ## Installation
 
 You can install using `pip`:
@@ -23,3 +30,4 @@ the nbextension:
 ```bash
 jupyter nbextension enable --py [--sys-prefix|--user|--system] ipydagred3
 ```
+

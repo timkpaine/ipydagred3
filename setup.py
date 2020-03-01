@@ -9,7 +9,7 @@ from jupyter_packaging import (
 
 ensure_python(('2.7', '>=3.7'))
 pjoin = path.join
-name = 'jupyterlab_autoversion'
+name = 'ipydagred3'
 here = path.abspath(path.dirname(__file__))
 version = get_version(pjoin(here, name, '_version.py'))
 
@@ -24,7 +24,7 @@ data_spec = [
     # Lab extension installed by default:
     ('share/jupyter/lab/extensions',
      'lab-dist',
-     'jupyterlab_autoversion-*.tgz'),
+     'ipydagred3-*.tgz'),
     # Config to enable server extension by default:
     ('etc/jupyter',
      'jupyter-config',
@@ -45,9 +45,10 @@ cmdclass['js'] = combine_commands(
 setup(
     name=name,
     version=version,
-    description='Automatically version notebooks from JupyterLab',
+    description='ipywidgets wrapper around dagre-d3',
     long_description=long_description,
-    url='https://github.com/timkpaine/jupyterlab_autoversion',
+    long_description_content_type='text/markdown',
+    url='https://github.com/timkpaine/ipydagred3',
     author='Tim Paine',
     author_email='t.paine154@gmail.com',
     license='Apache 2.0',
