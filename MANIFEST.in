@@ -1,35 +1,31 @@
-include LICENSE.txt
+include LICENSE
 include README.md
+include CONTRIBUTING.md
 
-include setupbase.py
-include pytest.ini
-include .coverage.rc
+include requirements.txt
+include setup.cfg
+include pyproject.toml
+include .bumpversion.cfg
+include jest.config.js
+include Makefile
 
-include tsconfig.json
-include package.json
-include webpack.config.js
-include ipydagre-d3/labextension/*.tgz
+graft tests
 
 # Documentation
 graft docs
 exclude docs/\#*
+
+# docs subdirs we want to skip
 prune docs/build
 prune docs/gh-pages
 prune docs/dist
 
-# Examples
-graft examples
-
-# Tests
-graft tests
-prune tests/build
-
-# Javascript files
-graft ipydagre-d3/nbextension
+# Webapp files
+include package.json
+include tsconfig.json
+include tslint.json
 graft src
-prune **/node_modules
-prune coverage
-prune lib
+graft style
 
 # Patterns to exclude from any directory
 global-exclude *~

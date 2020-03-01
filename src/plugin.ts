@@ -1,6 +1,3 @@
-// Copyright (c) Tim Paine
-// Distributed under the terms of the Modified BSD License.
-
 import {
   Application, IPlugin
 } from '@phosphor/application';
@@ -19,7 +16,7 @@ import {
   MODULE_NAME, MODULE_VERSION
 } from './version';
 
-const EXTENSION_ID = 'ipydagre-d3:plugin';
+const EXTENSION_ID = 'ipydagred3:plugin';
 
 /**
  * The example plugin.

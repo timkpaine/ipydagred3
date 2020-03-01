@@ -1,6 +1,4 @@
-// Copyright (c) Tim Paine
-// Distributed under the terms of the Modified BSD License.
-
+// tslint:disable: max-classes-per-file
 import {
   DOMWidgetModel, DOMWidgetView, ISerializers
 } from '@jupyter-widgets/base';
@@ -17,12 +15,12 @@ export
 class ExampleModel extends DOMWidgetModel {
   defaults() {
     return {...super.defaults(),
-      _model_name: ExampleModel.model_name,
-      _model_module: ExampleModel.model_module,
-      _model_module_version: ExampleModel.model_module_version,
-      _view_name: ExampleModel.view_name,
-      _view_module: ExampleModel.view_module,
-      _view_module_version: ExampleModel.view_module_version,
+      _model_name: ExampleModel.modelName,
+      _model_module: ExampleModel.modelModule,
+      _model_module_version: ExampleModel.modelModuleVersion,
+      _view_name: ExampleModel.viewName,
+      _view_module: ExampleModel.viewModule,
+      _view_module_version: ExampleModel.viewModuleVersion,
       value : 'Hello World'
     };
   }
@@ -32,12 +30,12 @@ class ExampleModel extends DOMWidgetModel {
       // Add any extra serializers here
     }
 
-  static model_name = 'ExampleModel';
-  static model_module = MODULE_NAME;
-  static model_module_version = MODULE_VERSION;
-  static view_name = 'ExampleView';   // Set to null if no view
-  static view_module = MODULE_NAME;   // Set to null if no view
-  static view_module_version = MODULE_VERSION;
+  static modelName = 'ExampleModel';
+  static modelModule = MODULE_NAME;
+  static modelModuleVersion = MODULE_VERSION;
+  static viewName = 'ExampleView';   // Set to null if no view
+  static viewModule = MODULE_NAME;   // Set to null if no view
+  static viewModuleVersion = MODULE_VERSION;
 }
 
 

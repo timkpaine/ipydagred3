@@ -1,116 +1,76 @@
-#!/usr/bin/env python
-# coding: utf-8
+from setuptools import setup, find_packages
+from codecs import open
+from os import path
 
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Modified BSD License.
-
-from __future__ import print_function
-from glob import glob
-from os.path import join as pjoin
-
-
-from setupbase import (
+from jupyter_packaging import (
     create_cmdclass, install_npm, ensure_targets,
-    find_packages, combine_commands, ensure_python,
-    get_version, HERE
+    combine_commands, ensure_python, get_version
 )
 
-from setuptools import setup
+ensure_python(('2.7', '>=3.7'))
+pjoin = path.join
+name = 'jupyterlab_autoversion'
+here = path.abspath(path.dirname(__file__))
+version = get_version(pjoin(here, name, '_version.py'))
+
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
+    requires = f.read().split()
 
 
-# The name of the project
-name = 'ipydagre-d3'
-
-# Ensure a valid python version
-ensure_python('>=3.4')
-
-# Get our version
-version = get_version(pjoin(name, '_version.py'))
-
-nb_path = pjoin(HERE, name, 'nbextension', 'static')
-lab_path = pjoin(HERE, name, 'labextension')
-
-# Representative files that should exist after a successful build
-jstargets = [
-    pjoin(nb_path, 'index.js'),
-    pjoin(HERE, 'lib', 'plugin.js'),
-]
-
-package_data_spec = {
-    name: [
-        'nbextension/static/*.*js*',
-        'labextension/*.tgz'
-    ]
-}
-
-data_files_spec = [
-    ('share/jupyter/nbextensions/ipydagre-d3',
-        nb_path, '*.js*'),
-    ('share/jupyter/lab/extensions', lab_path, '*.tgz'),
-    ('etc/jupyter/nbconfig/notebook.d' , HERE, 'ipydagre-d3.json')
+data_spec = [
+    # Lab extension installed by default:
+    ('share/jupyter/lab/extensions',
+     'lab-dist',
+     'jupyterlab_autoversion-*.tgz'),
+    # Config to enable server extension by default:
+    ('etc/jupyter',
+     'jupyter-config',
+     '**/*.json'),
 ]
 
 
-cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data_spec,
-    data_files_spec=data_files_spec)
-cmdclass['jsdeps'] = combine_commands(
-    install_npm(HERE, build_cmd='build:all'),
-    ensure_targets(jstargets),
+cmdclass = create_cmdclass('js', data_files_spec=data_spec)
+cmdclass['js'] = combine_commands(
+    install_npm(here, build_cmd='build:all'),
+    ensure_targets([
+        pjoin(here, 'lib', 'index.js'),
+        pjoin(here, 'style', 'index.css')
+    ]),
 )
 
 
-setup_args = dict(
-    name            = name,
-    description     = 'A Custom Jupyter Widget Library',
-    version         = version,
-    scripts         = glob(pjoin('scripts', '*')),
-    cmdclass        = cmdclass,
-    packages        = find_packages(),
-    author          = 'Tim Paine',
-    author_email    = 't.paine154@gmail.com',
-    url             = 'https://github.com/timkpaine/ipydagre-d3',
-    license         = 'BSD',
-    platforms       = "Linux, Mac OS X, Windows",
-    keywords        = ['Jupyter', 'Widgets', 'IPython'],
-    classifiers     = [
-        'Intended Audience :: Developers',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python',
+setup(
+    name=name,
+    version=version,
+    description='Automatically version notebooks from JupyterLab',
+    long_description=long_description,
+    url='https://github.com/timkpaine/jupyterlab_autoversion',
+    author='Tim Paine',
+    author_email='t.paine154@gmail.com',
+    license='Apache 2.0',
+
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Framework :: Jupyter',
     ],
-    include_package_data = True,
-    install_requires = [
-        'ipywidgets>=7.0.0',
-    ],
-    extras_require = {
-        'test': [
-            'pytest>=3.6',
-            'pytest-cov',
-            'nbval',
-        ],
-        'examples': [
-            # Any requirements for the examples to run
-        ],
-        'docs': [
-            'sphinx>=1.5',
-            'recommonmark',
-            'sphinx_rtd_theme',
-            'nbsphinx>=0.2.13,<0.4.0',
-            'jupyter_sphinx',
-            'nbsphinx-link',
-            'pytest_check_links',
-            'pypandoc',
-        ],
-    },
-    entry_points = {
-    },
-)
 
-if __name__ == '__main__':
-    setup(**setup_args)
+    cmdclass=cmdclass,
+    keywords='jupyter jupyterlab',
+    packages=find_packages(exclude=['tests', ]),
+    install_requires=requires,
+    extras_require={
+        'dev': requires + ['pytest', 'pytest-cov', 'pylint', 'flake8', 'bumpversion', 'autopep8', 'mock']
+    },
+    include_package_data=True,
+    zip_safe=False,
+
+)

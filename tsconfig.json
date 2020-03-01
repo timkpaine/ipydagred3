@@ -1,22 +1,16 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "esModuleInterop":true,
-    "lib": ["es2015", "dom"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "noImplicitAny": true,
     "noEmitOnError": true,
     "noUnusedLocals": true,
-    "outDir": "lib",
-    "resolveJsonModule": true,
-    "rootDir": "src",
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "es2015"
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES6",
+    "outDir": "./lib",
+    "lib": ["es5", "es2015", "dom"],
+    "types": ["jest", "node"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-  ]
+  "include": ["src/*"]
 }

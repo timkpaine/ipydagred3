@@ -145,12 +145,14 @@ $RECYCLE.BIN/
 # ----
 
 **/node_modules/
-ipydagre-d3/nbextension/static/index.*
-ipydagre-d3/labextension/*.tgz
+ipydagred3/nbextension/static/index.*
+ipydagred3/labextension/*.tgz
 
 # Coverage data
 # -------------
 **/coverage/
 
 # Packed lab extensions
-ipydagre-d3/labextension
+ipydagred3/labextension
+python_junit.xml
+

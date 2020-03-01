@@ -1,7 +1,5 @@
-// Copyright (c) Tim Paine
-// Distributed under the terms of the Modified BSD License.
-
-const data = require('../package.json');
+// tslint:disable-next-line: no-var-requires
+let data = require("../package.json");
 
 /**
  * The _model_module_version/_view_module_version this package implements.
