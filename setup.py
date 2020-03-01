@@ -38,7 +38,7 @@ cmdclass['js'] = combine_commands(
     install_npm(here, build_cmd='build:all'),
     ensure_targets([
         pjoin(here, 'lib', 'index.js'),
-        pjoin(here, 'style', 'widget.css')
+        pjoin(here, 'css', 'widget.css')
     ]),
 )
 
