@@ -1,4 +1,4 @@
-from traitlets import HasTraits, observe, Unicode, Float, Bool, Instance, List, Dict
+from traitlets import HasTraits, observe, Bool, Instance, List, Dict
 from .edge import Edge
 from .node import Node
 
@@ -132,7 +132,7 @@ class Graph(HasTraits):
                        "source": (source.v, source.w),
                        "attr": attr,
                        "value": value})
-            
+
         elif isinstance(source, Node):
             self.post({"type": "node",
                        "source": source.name,

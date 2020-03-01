@@ -26,7 +26,6 @@ class Node(HasTraits):
     def _observe_label(self, change):
         self._notify_change('label', change['new'])
 
-
     @observe('attrs')
     def _observe_attrs(self, change):
         self._notify_change('attrs', change['new'])

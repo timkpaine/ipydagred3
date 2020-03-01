@@ -16,8 +16,9 @@ version = get_version(pjoin(here, name, '_version.py'))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
-    requires = f.read().split()
+requires = [
+    "ipywidgets>=7.5.1"
+]
 
 
 data_spec = [

@@ -93,9 +93,6 @@ class DagreD3View extends DOMWidgetView {
       this.svg.call(zoom.transform, d3.zoomIdentity.translate((parseInt(this.svg.attr("width"), 10) - this.graph.graph().width * initialScale) / 2, 20).scale(initialScale));
 
       this.svg.attr('height', this.graph.graph().height * initialScale + 40);
-      console.log(this.graph);
-      console.log(this.graph.graph());
-
       this.graph_changed();
       // this.model.on('change:value', this.value_changed, this);
     });
@@ -120,7 +117,6 @@ class DagreD3View extends DOMWidgetView {
     } else if (msg.type === "edge") {
       this.graph.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
     }
-    console.log(msg);
     this._render();
   }
 
@@ -135,10 +131,10 @@ class DagreD3View extends DOMWidgetView {
 
     this.graph.setGraph(ob);
 
-    for(let n of graph.nodes) {
+    for(const n of graph.nodes) {
       this.graph.setNode(n.name, n.attrs);
     }
-    for(let e of graph.edges) {
+    for(const e of graph.edges) {
       this.graph.setEdge(e.v.name, e.w.name, e.attrs);
     }
     this._render();
