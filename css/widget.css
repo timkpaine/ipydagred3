@@ -16,7 +16,7 @@ div.dagred3 svg {
 
 .dagred3 .edgePath path {
   stroke: #333;
-  fill: #333;
+  fill: transparent;
   stroke-width: 1.5px;
 }
 
