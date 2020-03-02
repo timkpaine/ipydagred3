@@ -1,6 +1,6 @@
 {
   "name": "ipydagred3",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Custom Jupyter Widget Library",
   "keywords": [
     "jupyter",
@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1.10 || ^2",
+    "@popperjs/core": "^2.0.6",
     "@types/d3": "^5.7.2",
     "@types/dagre-d3": "^0.4.39",
     "d3": "^5.15.0",

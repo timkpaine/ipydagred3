@@ -157,3 +157,4 @@ ipydagred3/labextension
 python_junit.xml
 
 *.ipynb
+.autoversion

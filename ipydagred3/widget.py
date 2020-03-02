@@ -3,15 +3,16 @@ from ipywidgets import DOMWidget
 from traitlets import observe, Unicode, Instance, Dict
 from functools import wraps
 from .graph import Graph
+from ._version import __version__
 
 
 class DagreD3Widget(DOMWidget):
     _model_name = Unicode('DagreD3Model').tag(sync=True)
     _model_module = Unicode("ipydagred3").tag(sync=True)
-    _model_module_version = Unicode("0.1.0").tag(sync=True)
+    _model_module_version = Unicode("^" + __version__).tag(sync=True)
     _view_name = Unicode('DagreD3View').tag(sync=True)
     _view_module = Unicode("ipydagred3").tag(sync=True)
-    _view_module_version = Unicode("0.1.0").tag(sync=True)
+    _view_module_version = Unicode("^" + __version__).tag(sync=True)
 
     graph = Instance(Graph, args=(), kwargs={})
     _graph = Dict().tag(sync=True)
