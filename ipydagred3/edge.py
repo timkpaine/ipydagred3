@@ -7,13 +7,14 @@ class Edge(HasTraits):
     w = Instance(Node)
     label = Unicode()
     attrs = Dict()
+    tooltip = Unicode(default_value="")
     labelpos = Unicode()
     labeloffset = Float()
 
     _graph = None
 
-    def __init__(self, v, w, label="", labelpos="c", labeloffset=0.0, attrs=None):
-        super(Edge, self).__init__(v=v, w=w, label=label, labelpos=labelpos, labeloffset=labeloffset, attrs=attrs or {})
+    def __init__(self, v, w, label="", labelpos="r", labeloffset=0.0, tooltip="", **attrs):
+        super(Edge, self).__init__(v=v, w=w, label=label, labelpos=labelpos, labeloffset=labeloffset, tooltip=tooltip or label or "{}->{}".format(v, w), attrs=attrs or {})
 
     def _setGraph(self, g):
         self._graph = g
@@ -43,15 +44,19 @@ class Edge(HasTraits):
     def _observe_labeloffset(self, change):
         self._notify_change('labeloffset', change['new'])
 
+    @observe('tooltip')
+    def _observe_tooltip(self, change):
+        self._notify_change('tooltip', change['new'])
+
     @observe('attrs')
     def _observe_attrs(self, change):
         self._notify_change('attrs', change['new'])
 
-    @validate("lablepos")
+    @validate("labelpos")
     def _validate_lablepos(self, proposal):
-        if proposal not in ('l', 'c', 'r'):
+        if proposal.value not in ('l', 'c', 'r'):
             raise TraitError("lablepos must be in (l, c, r)")
-        return proposal
+        return proposal.value
 
     def to_dict(self):
         ret = {}

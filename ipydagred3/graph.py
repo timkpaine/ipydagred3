@@ -54,6 +54,11 @@ class Graph(HasTraits):
             if edge_or_node1.w not in self.nodes:
                 self.setNode(edge_or_node1.w)
             self.edges.append(edge_or_node1)
+            edge_or_node1['label'] = label or edge_or_node1.label
+            edge_or_node1['tooltip'] = attrs.pop("tooltip", edge_or_node1.tooltip)
+            edge_or_node1['labelpos'] = attrs.pop("labelpos", edge_or_node1.labelpos)
+            edge_or_node1['labeloffset'] = attrs.pop("labeloffset", edge_or_node1.labeloffset)
+            edge_or_node1['attrs'].update(attrs)
             return edge_or_node1
         if isinstance(edge_or_node1, Node):
             node1 = edge_or_node1
@@ -63,7 +68,7 @@ class Graph(HasTraits):
         if not isinstance(node2, Node):
             node2 = self.setNode(node2)
 
-        edge = Edge(node1, node2, label=label, attrs=attrs)
+        edge = Edge(node1, node2, label=label, **attrs)
         edge._setGraph(self)
         self.edges.append(edge)
         self.post({"type": "setEdge",
@@ -97,14 +102,18 @@ class Graph(HasTraits):
                     break
             # doesnt exist, make new
             if not isinstance(node, Node):
-                node = Node(node, attrs=attrs)
+                node = Node(node, **attrs)
                 self.nodes.append(node)
             else:
+                node.shape = attrs.pop("shape", node.shape)
+                node.label = attrs.pop("label", node.label)
                 node.attrs.update(attrs)
         else:
             if node not in self.nodes:
                 self.nodes.append(node)
             else:
+                node.shape = attrs.pop("shape", node.shape)
+                node.label = attrs.pop("label", node.label)
                 node.attrs.update(attrs)
 
         node._setGraph(self)
