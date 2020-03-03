@@ -23,6 +23,14 @@ div.dagred3 svg {
   stroke-width: 1.5px;
 }
 
+.dagred3 .edgeLabel foreignObject {
+  overflow: visible;
+}
+
+.dagred3 .edgeLabel foreignObject u {
+  text-decoration: none;
+}
+
 .dagred3 .node text {
   pointer-events: none;
 }

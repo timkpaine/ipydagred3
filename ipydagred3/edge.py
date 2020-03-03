@@ -8,8 +8,9 @@ class Edge(HasTraits):
     label = Unicode()
     attrs = Dict()
     tooltip = Unicode(default_value="")
-    labelpos = Unicode()
+    labelpos = Unicode(default_value="r")
     labeloffset = Float()
+    arrowhead = Unicode(default_value="vee")
 
     _graph = None
 
@@ -66,4 +67,6 @@ class Edge(HasTraits):
         ret["attrs"]["label"] = self.label
         ret["attrs"]["labelpos"] = self.labelpos
         ret["attrs"]["labeloffset"] = self.labeloffset
+        ret["attrs"]["tooltip"] = self.tooltip
+        ret["attrs"]["arrowhead"] = self.arrowhead
         return ret

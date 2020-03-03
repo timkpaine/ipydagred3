@@ -69,7 +69,6 @@ class DagreD3View extends DOMWidgetView {
     renderer(this.inner, this.graph);
 
     const tooltip = d3.select("#dagred3tooltip");
-
     this.inner.selectAll('g.node')
       .attr("data-tooltip", (v: string) => {
         return this.graph.node(v).tooltip;
@@ -85,41 +84,54 @@ class DagreD3View extends DOMWidgetView {
       })
       .on("mouseout", () => {return tooltip.style("visibility", "hidden");
     });
-
-    // TODO
-    // this.inner.selectAll('g.edgeLabel')
-    //   .attr("data-tooltip", (e: string) => {
-    //     return this.graph.edge(e).tooltip;
-    //   })
-    //   .on("mouseover", () => {return tooltip.style("visibility", "visible");})
-    //   .on("mousemove", (v: string) => {
-    //     tooltip.text(this.graph.node(v).tooltip)
-    //     .style("top", (d3.event.pageY-10)+"px")
-    //     .style("left",(d3.event.pageX+10)+"px");
-    //   })
-    //   .on("mouseout", () => {return tooltip.style("visibility", "hidden");
-    // });
   }
 
   _handle_message(msg: DagreD3Message) {
     if(msg.type === "setNode") {
       this.setNode(msg.source.name, msg.source.attrs);
     } else if (msg.type === "setEdge") {
-      this.graph.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
+      this.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
     } else if (msg.type === "graph") {
       const ob = {} as any;
       ob[msg.attr] = msg.value;
       this.graph.setGraph(ob);
     } else if (msg.type === "node") {
-      this.graph.setNode(msg.source.name, msg.source.attrs);
+      this.setNode(msg.source.name, msg.source.attrs);
     } else if (msg.type === "edge") {
-      this.graph.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
+      this.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
     }
     this._render();
   }
 
   setNode(name: string, attrs: any){
     this.graph.setNode(name, attrs);
+  }
+
+  setEdge(v: string, w: string, attrs: any) {
+    const tooltip = d3.select("#dagred3tooltip");
+    const label = document.createElement("u");
+    label.onmouseover = () => {
+      return tooltip.style("visibility", "visible");
+    };
+
+    label.onmouseout = () => {
+      return tooltip.style("visibility", "hidden");
+    };
+
+    label.onmousemove = (e: MouseEvent) => {
+      return tooltip.text(attrs.tooltip)
+      .style("top", (e.pageY-10)+"px")
+      .style("left",(e.pageX+10)+"px");
+    }
+
+    label.onclick = () => {
+      this.send({event: "click", value: [v, w]});
+    }
+
+    label.innerHTML = attrs.label;
+    attrs.label = label;
+    attrs.labelType = "html";
+    this.graph.setEdge(v, w, attrs);
   }
 
   graph_changed() {
@@ -137,7 +149,7 @@ class DagreD3View extends DOMWidgetView {
       this.setNode(n.name, n.attrs);
     }
     for(const e of graph.edges) {
-      this.graph.setEdge(e.v.name, e.w.name, e.attrs);
+      this.setEdge(e.v.name, e.w.name, e.attrs);
     }
     this._render();
   }

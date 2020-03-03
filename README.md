@@ -36,4 +36,8 @@ jupyter nbextension enable --py [--sys-prefix|--user|--system] ipydagred3
 ## Features
 - Dynamically create and modify graphs from python
 - Change color, shape, tooltip, etc
-- Click events (click on node and get event in ipywidget indicating source, good for node inspector tools)
+- Click events (click on node or edge and get event in ipywidget indicating source, good for node inspector tools)
+
+
+### Tooltips and Click events
+![](https://raw.githubusercontent.com/timkpaine/ipydagred3/master/docs/img/example2.gif)
