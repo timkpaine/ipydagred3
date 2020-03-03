@@ -140,20 +140,14 @@ class Graph(HasTraits):
     def _notify_change(self, source, attr, value):
         if isinstance(source, Edge):
             self.post({"type": "edge",
-                       "source": (source.v, source.w),
-                       "attr": attr,
-                       "value": value})
+                       "source": source.to_dict()})
 
         elif isinstance(source, Node):
             self.post({"type": "node",
-                       "source": source.name,
-                       "attr": attr,
-                       "value": value})
+                       "source": source.to_dict()})
         elif source == self:
             self.post({"type": "graph",
-                       "source": "",
-                       "attr": attr,
-                       "value": value})
+                       "source": self.to_dict()})
         else:
             raise Exception('Unknown source: {}'.format(source))
 
