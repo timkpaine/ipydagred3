@@ -107,6 +107,7 @@ class Graph(HasTraits):
             else:
                 node.shape = attrs.pop("shape", node.shape)
                 node.label = attrs.pop("label", node.label)
+                node.tooltip = attrs.pop("tooltip", node.tooltip)
                 node.attrs.update(attrs)
         else:
             if node not in self.nodes:
@@ -114,6 +115,7 @@ class Graph(HasTraits):
             else:
                 node.shape = attrs.pop("shape", node.shape)
                 node.label = attrs.pop("label", node.label)
+                node.tooltip = attrs.pop("tooltip", node.tooltip)
                 node.attrs.update(attrs)
 
         node._setGraph(self)
