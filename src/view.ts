@@ -74,6 +74,9 @@ class DagreD3View extends DOMWidgetView {
       .attr("data-tooltip", (v: string) => {
         return this.graph.node(v).tooltip;
       })
+      .on("click", (v: string) => {
+        this.send({event: "click", value: v});
+      })
       .on("mouseover", () => {return tooltip.style("visibility", "visible");})
       .on("mousemove", (v: string) => {
         tooltip.text(this.graph.node(v).tooltip)

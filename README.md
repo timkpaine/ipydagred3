@@ -33,3 +33,7 @@ the nbextension:
 jupyter nbextension enable --py [--sys-prefix|--user|--system] ipydagred3
 ```
 
+## Features
+- Dynamically create and modify graphs from python
+- Change color, shape, tooltip, etc
+- Click events (click on node and get event in ipywidget indicating source, good for node inspector tools)

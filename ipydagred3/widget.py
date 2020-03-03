@@ -1,5 +1,5 @@
 # coding: utf-8
-from ipywidgets import DOMWidget
+from ipywidgets import DOMWidget, CallbackDispatcher
 from traitlets import observe, Unicode, Instance, Dict
 from functools import wraps
 from .graph import Graph
@@ -26,6 +26,20 @@ class DagreD3Widget(DOMWidget):
 
         # set widget for callbacks
         self.graph._setWidget(self)
+
+        # for click events
+        self._click_handlers = CallbackDispatcher()
+        self.on_msg(self._handle_click_msg)
+
+    def on_click(self, callback, remove=False):
+        self._click_handlers.register_callback(callback, remove=remove)
+
+    def click(self, value):
+        self._click_handlers(self, value)
+
+    def _handle_click_msg(self, _, content, buffers):
+        if content.get('event', '') == 'click':
+            self.click(content.get('value', ''))
 
     @wraps(Graph.setGraph)
     def setGraph(self, *args, **kwargs):
