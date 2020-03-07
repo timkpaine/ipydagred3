@@ -73,6 +73,14 @@ setup(
         'dev': requires + ['pytest', 'pytest-cov', 'pylint', 'flake8', 'bumpversion', 'autopep8', 'mock']
     },
     include_package_data=True,
+    data_files=[
+        ('share/jupyter/nbextensions/ipydagred3', [
+            'ipydagred3/nbextension/static/extension.js',
+            'ipydagred3/nbextension/static/index.js',
+            'ipydagred3/nbextension/static/index.js.map',
+        ]),
+        ('etc/jupyter/nbconfig/notebook.d', ['ipydagred3.json'])
+    ],
     zip_safe=False,
 
 )

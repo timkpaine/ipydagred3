@@ -37,7 +37,26 @@ module.exports = [
     externals,
     resolve,
   },
-
+  {
+    // Bundle for the notebook containing the custom widget views and models
+    //
+    // This bundle contains the implementation for the custom widget views and
+    // custom widget.
+    // It must be an amd module
+    //
+    entry: './lib/index.js',
+    devtool: 'source-map',
+    resolve: resolve,
+    output: {
+        filename: 'index.js',
+        path: path.resolve(__dirname, 'ipydagred3', 'nbextension', 'static'),
+        libraryTarget: 'amd'
+    },
+    module: {
+        rules: rules
+    },
+    externals: ['@jupyter-widgets/base']
+  },
   /**
    * Embeddable ipydagred3 bundle
    *

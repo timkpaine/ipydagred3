@@ -55,6 +55,7 @@ class DagreD3Widget(DOMWidget):
 
     def post(self, msg):
         self.send(msg)
+        self._graph = self.graph.to_dict()
 
     @observe('graph')
     def _observe_graph(self, change):
