@@ -41,3 +41,6 @@ jupyter nbextension enable --py [--sys-prefix|--user|--system] ipydagred3
 
 ### Tooltips and Click events
 ![](https://raw.githubusercontent.com/timkpaine/ipydagred3/master/docs/img/example2.gif)
+
+## Examples
+[Example](https://github.com/timkpaine/ipydagred3/tree/master/docs/examples/example.ipynb)
