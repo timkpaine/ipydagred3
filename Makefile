@@ -52,7 +52,7 @@ dist: js  ## create dists
 	python3.7 setup.py sdist bdist_wheel
 
 publish: dist  ## dist to pypi and npm
-	twine check dist/* && twine upload dist/*
+	twine check dist/*.{tar.gz,whl} && twine upload dist/*.{tar.gz,whl}
 	npm publish
 
 # Thanks to Francoise at marmelab.com for this
