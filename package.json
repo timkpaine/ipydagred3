@@ -88,6 +88,11 @@
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
+  "resolutions": {
+    "acorn": "^6.4.1",
+    "kind-of": "^6.0.3",
+    "minimist": "^0.2.1"
+  },
   "jupyterlab": {
     "extension": "lib/plugin"
   }
