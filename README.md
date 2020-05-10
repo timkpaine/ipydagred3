@@ -43,4 +43,8 @@ jupyter nbextension enable --py [--sys-prefix|--user|--system] ipydagred3
 ![](https://raw.githubusercontent.com/timkpaine/ipydagred3/master/docs/img/example2.gif)
 
 ## Examples
-[Example](https://github.com/timkpaine/ipydagred3/tree/master/docs/examples/example.ipynb)
+Network example from the first gif
+[Network Example](https://github.com/timkpaine/ipydagred3/tree/master/docs/examples/example.ipynb)
+
+Tooltip Example from the second gif
+[Tooltip Example](https://github.com/timkpaine/ipydagred3/tree/master/docs/examples/example.ipynb)
