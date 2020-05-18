@@ -1,20 +1,20 @@
 testjs: ## Clean and Make js tests
-	yarn test
+	cd js; yarn test
 
 testpy: ## Clean and Make unit tests
 	python3.7 -m pytest -v ipydagred3/tests --cov=ipydagred3
 
 tests: lint ## run the tests
 	python3.7 -m pytest -v ipydagred3/tests --cov=ipydagred3 --junitxml=python_junit.xml --cov-report=xml --cov-branch
-	yarn test
+	cd js; yarn test
 
 lint: ## run linter
 	flake8 ipydagred3 setup.py
-	yarn lint
+	cd js; yarn lint
 
 fix:  ## run autopep8/tslint fix
 	autopep8 --in-place -r -a -a ipydagred3/
-	./node_modules/.bin/tslint --fix src/*
+	cd js; yarn fix
 
 annotate: ## MyPy type annotation check
 	mypy -s ipydagred3
@@ -41,11 +41,11 @@ serverextension: install ## enable serverextension
 	jupyter serverextension enable --py ipydagred3
 
 js:  ## build javascript
-	yarn
-	yarn build
+	cd js; yarn
+	cd js; yarn build
 
 labextension: js ## enable labextension
-	jupyter labextension install .
+	cd js; jupyter labextension install .
 
 dist: js  ## create dists
 	rm -rf dist build
@@ -53,7 +53,7 @@ dist: js  ## create dists
 
 publish: dist  ## dist to pypi and npm
 	twine check dist/*.{tar.gz,whl} && twine upload dist/*.{tar.gz,whl}
-	npm publish
+	cd js; npm publish
 
 # Thanks to Francoise at marmelab.com for this
 .DEFAULT_GOAL := help
