@@ -71,14 +71,14 @@ class DagreD3View extends DOMWidgetView {
     const tooltip = d3.select("#dagred3tooltip");
     this.inner.selectAll('g.node')
       .attr("data-tooltip", (v: string) => {
-        return this.graph.node(v).tooltip;
+        return (this.graph.node(v) as any).tooltip;
       })
       .on("click", (v: string) => {
         this.send({event: "click", value: v});
       })
       .on("mouseover", () => {return tooltip.style("visibility", "visible");})
       .on("mousemove", (v: string) => {
-        tooltip.text(this.graph.node(v).tooltip)
+        tooltip.text((this.graph.node(v) as any).tooltip)
         .style("top", (d3.event.pageY-10)+"px")
         .style("left",(d3.event.pageX+10)+"px");
       })
