@@ -28,7 +28,7 @@ include babel.config.js
 include jest.config.js
 include webpack.config.js
 graft src
-graft style
+graft css
 
 # Patterns to exclude from any directory
 global-exclude *~
