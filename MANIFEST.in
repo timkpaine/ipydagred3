@@ -24,6 +24,9 @@ prune docs/dist
 include package.json
 include tsconfig.json
 include tslint.json
+include babel.config.js
+include jest.config.js
+include webpack.config.js
 graft src
 graft style
 
