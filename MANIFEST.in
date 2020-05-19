@@ -6,29 +6,18 @@ include requirements.txt
 include setup.cfg
 include pyproject.toml
 include .bumpversion.cfg
-include jest.config.js
 include Makefile
 
-graft tests
-
-# Documentation
-graft docs
-exclude docs/\#*
-
-# docs subdirs we want to skip
-prune docs/build
-prune docs/gh-pages
-prune docs/dist
-
 # Webapp files
-include package.json
-include tsconfig.json
-include tslint.json
-include babel.config.js
-include jest.config.js
-include webpack.config.js
-graft src
-graft css
+graft js
+prune js/node_modules
+prune js/build
+prune js/dist
+prune js/docs
+prune js/lib
+prune js/package-lock.json
+prune js/yarn.lock
+
 
 # Patterns to exclude from any directory
 global-exclude *~
