@@ -1,19 +1,19 @@
 import {
-    Application, IPlugin,
+  Application, IPlugin,
 } from "@lumino/application";
 
 import {
-    Widget,
+  Widget,
 } from "@lumino/widgets";
 
 import {
-    IJupyterWidgetRegistry,
+  IJupyterWidgetRegistry,
 } from "@jupyter-widgets/base";
 
 import * as widgetExports from "./widget";
 
 import {
-    MODULE_VERSION,
+  MODULE_VERSION,
 } from "./version";
 
 const EXTENSION_ID = "ipydagred3:plugin";
@@ -22,10 +22,10 @@ const EXTENSION_ID = "ipydagred3:plugin";
  * The example plugin.
  */
 const examplePlugin: IPlugin<Application<Widget>, void> = {
-    activate: activateWidgetExtension,
-    autoStart: true,
-    id: EXTENSION_ID,
-    requires: [IJupyterWidgetRegistry],
+  activate: activateWidgetExtension,
+  autoStart: true,
+  id: EXTENSION_ID,
+  requires: [IJupyterWidgetRegistry],
 };
 
 export default examplePlugin;
@@ -35,9 +35,9 @@ export default examplePlugin;
  * Activate the widget extension.
  */
 function activateWidgetExtension(app: Application<Widget>, registry: IJupyterWidgetRegistry): void {
-    registry.registerWidget({
-        exports: widgetExports,
-        name: "ipydagred3",
-        version: MODULE_VERSION,
-    });
+  registry.registerWidget({
+    exports: widgetExports,
+    name: "ipydagred3",
+    version: MODULE_VERSION,
+  });
 }
