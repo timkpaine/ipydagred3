@@ -29,7 +29,7 @@
     "url": "https://github.com/timkpaine/ipydagred3"
   },
   "scripts": {
-    "build": "npm run build:lib && npm run build:nbextension",
+    "build": "npm run build:lib && npm run build:nbextension && build:labextension",
     "build:labextension": "npm run clean:labextension && mkdirp ../ipydagred3/labextension && cd ../ipydagred3/labextension && npm pack ../../js",
     "build:lib": "tsc",
     "build:nbextension": "webpack -p",
