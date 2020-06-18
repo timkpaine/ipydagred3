@@ -24,6 +24,9 @@ class DagreD3View extends DOMWidgetView {
   public svg: any;
   public inner: any;
   public tooltip: HTMLDivElement;
+  public renderer: any;
+  public throttle: any;
+  public queued: boolean;
 
   public render(): void {
     this.model.on("msg:custom", this._handle_message, this);
@@ -49,6 +52,8 @@ class DagreD3View extends DOMWidgetView {
     this.inner.attr("width", "800");
     this.graph = new graphlib.Graph().setGraph({height: 400, width: 400});
 
+    this.renderer = new render();
+
     this.displayed.then(() => {
       // Set up zoom support
       const zoom = d3.zoom()
@@ -67,8 +72,17 @@ class DagreD3View extends DOMWidgetView {
   }
 
   public _render(): void {
-    const renderer = new render();
-    renderer(this.inner, this.graph);
+    if (this.throttle) {
+      // do not schedule a render
+      // eslint-disable-next-line no-console
+      console.log("[ipydagred3] throttling...");
+      this.queued = true;
+      return;
+    }
+
+    this.throttle = 1; // set guard
+
+    this.renderer(this.inner, this.graph);
 
     const tooltip = d3.select("#dagred3tooltip");
     this.inner.selectAll("g.node")
@@ -83,6 +97,20 @@ class DagreD3View extends DOMWidgetView {
           .style("left", (d3.event.pageX + 10) + "px");
       })
       .on("mouseout", () => tooltip.style("visibility", "hidden"));
+
+    // any queued will now have been rendered
+    this.queued = false;
+
+    // remove guard after timeout, rerender if any queue
+    this.throttle = setTimeout(() => {
+      // since this sets throttle, if any render
+      // requests come in during the 200ms cooldown,
+      // they'll set queued and a rerender will be triggered
+      this.throttle = undefined;
+      if (this.queued) {
+        this._render();
+      }
+    }, 200);
   }
 
   public _handle_message(msg: DagreD3Message): void {
