@@ -13,7 +13,7 @@ lint: ## run linter
 	cd js; yarn lint
 
 fix:  ## run autopep8/tslint fix
-	autopep8 --in-place -r -a -a ipydagred3/
+	autopep8 --in-place -r -a -a ipydagred3/ setup.py
 	cd js; yarn fix
 
 annotate: ## MyPy type annotation check

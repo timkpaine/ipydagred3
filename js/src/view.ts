@@ -72,9 +72,10 @@ class DagreD3View extends DOMWidgetView {
   }
 
   public _render(): void {
-    if(this.throttle) {
+    if (this.throttle) {
       // do not schedule a render
-      console.log('[ipydagred3] throttling...')
+      // eslint-disable-next-line no-console
+      console.log("[ipydagred3] throttling...");
       this.queued = true;
       return;
     }
