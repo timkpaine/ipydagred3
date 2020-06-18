@@ -21,26 +21,33 @@ requires = [
     "ipywidgets>=7.5.1"
 ]
 
+nb_path = pjoin(here, name, 'nbextension', 'static')
+lab_path = pjoin(here, name, 'labextension')
 
-data_spec = [
-    # Lab extension installed by default:
-    ('share/jupyter/lab/extensions',
-     'lab-dist',
-     'ipydagred3-*.tgz'),
-    # Config to enable server extension by default:
-    ('etc/jupyter',
-     'jupyter-config',
-     '**/*.json'),
+# Representative files that should exist after a successful build
+jstargets = [
+    pjoin(jshere, 'lib', 'index.js'),
+]
+
+package_data_spec = {
+    name: [
+        'nbextension/static/*.*js*',
+        'labextension/*.tgz'
+    ]
+}
+
+data_files_spec = [
+    ('share/jupyter/nbextensions/ipydagred3',nb_path, '*.js*'),
+    ('share/jupyter/lab/extensions', lab_path, '*.tgz'),
+    ('etc/jupyter/nbconfig/notebook.d' , here, 'ipydagred3.json')
 ]
 
 
-cmdclass = create_cmdclass('js', data_files_spec=data_spec)
-cmdclass['js'] = combine_commands(
+cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data_spec,
+    data_files_spec=data_files_spec)
+cmdclass['jsdeps'] = combine_commands(
     install_npm(jshere, build_cmd='build:all'),
-    ensure_targets([
-        pjoin(jshere, 'lib', 'index.js'),
-        pjoin(jshere, 'css', 'widget.css')
-    ]),
+    ensure_targets(jstargets),
 )
 
 
@@ -65,9 +72,9 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Framework :: Jupyter',
     ],
-
+    platforms="Linux, Mac OS X, Windows",
+    keywords=['Jupyter', 'Jupyterlab', 'Widgets', 'IPython', 'Graph', 'Data', 'DAG'],
     cmdclass=cmdclass,
-    keywords='jupyter jupyterlab',
     packages=find_packages(exclude=['tests', ]),
     install_requires=requires,
     extras_require={
