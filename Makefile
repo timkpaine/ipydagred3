@@ -2,25 +2,25 @@ testjs: ## Clean and Make js tests
 	cd js; yarn test
 
 testpy: ## Clean and Make unit tests
-	python3.7 -m pytest -v ipydagred3/tests --cov=ipydagred3
+	python -m pytest -v ipydagred3/tests --cov=ipydagred3
 
 tests: lint ## run the tests
-	python3.7 -m pytest -v ipydagred3/tests --cov=ipydagred3 --junitxml=python_junit.xml --cov-report=xml --cov-branch
+	python -m pytest -v ipydagred3/tests --cov=ipydagred3 --junitxml=python_junit.xml --cov-report=xml --cov-branch
 	cd js; yarn test
 
 lint: ## run linter
-	flake8 ipydagred3 setup.py
+	python -m flake8 ipydagred3 setup.py
 	cd js; yarn lint
 
 fix:  ## run autopep8/tslint fix
-	autopep8 --in-place -r -a -a ipydagred3/ setup.py
+	python -m autopep8 --in-place -r -a -a ipydagred3/ setup.py
 	cd js; yarn fix
 
 annotate: ## MyPy type annotation check
-	mypy -s ipydagred3
+	python -m mypy -s ipydagred3
 
 annotate_l: ## MyPy type annotation check - count only
-	mypy -s ipydagred3 | wc -l
+	python -m mypy -s ipydagred3 | wc -l
 
 clean: ## clean the repository
 	find . -name "__pycache__" | xargs  rm -rf
@@ -35,10 +35,10 @@ docs:  ## make documentation
 	open ./docs/_build/html/index.html
 
 install:  ## install to site-packages
-	pip3 install .
+	python -m pip install .
 
 serverextension: install ## enable serverextension
-	jupyter serverextension enable --py ipydagred3
+	python -m jupyter serverextension enable --py ipydagred3
 
 js:  ## build javascript
 	cd js; yarn
@@ -49,10 +49,10 @@ labextension: js ## enable labextension
 
 dist: js  ## create dists
 	rm -rf dist build
-	python3.7 setup.py sdist bdist_wheel
+	python -m python setup.py sdist bdist_wheel
 
 publish: dist  ## dist to pypi and npm
-	twine check dist/*.{tar.gz,whl} && twine upload dist/*.{tar.gz,whl}
+	python -m twine check dist/*.{tar.gz,whl} && twine upload dist/*.{tar.gz,whl}
 	cd js; npm publish
 
 # Thanks to Francoise at marmelab.com for this
