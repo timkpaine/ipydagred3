@@ -23,7 +23,7 @@ class DagreD3View extends DOMWidgetView {
   public graph: graphlib.Graph;
   public svg: any;
   public inner: any;
-  public tooltip: HTMLDivElement;
+  public tooltip: HTMLDivElement | null;
   public renderer: any;
   public throttle: any;
   public queued: boolean;
