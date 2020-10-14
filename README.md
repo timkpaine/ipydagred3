@@ -8,6 +8,7 @@ ipywidgets library for drawing directed acyclic graphs in jupyterlab using [dagr
 [![PyPI](https://img.shields.io/pypi/l/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
 [![PyPI](https://img.shields.io/pypi/v/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
 [![npm](https://img.shields.io/npm/v/ipydagred3.svg)](https://www.npmjs.com/package/ipydagred3)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/timkpaine/ipydagred3/main?urlpath=lab)
 
 
 ![](https://raw.githubusercontent.com/timkpaine/ipydagred3/main/docs/img/example.gif)
