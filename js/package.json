@@ -47,7 +47,7 @@
     "watch:nbextension": "webpack --watch"
   },
   "dependencies": {
-    "@jupyter-widgets/base": "^3.0.0",
+    "@jupyter-widgets/base": "^3.0.0 || ^4.0.0",
     "d3": "^5.15.0",
     "dagre-d3": "^0.6.4"
   },

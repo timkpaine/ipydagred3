@@ -10,8 +10,6 @@ import {
   IJupyterWidgetRegistry,
 } from "@jupyter-widgets/base";
 
-import * as widgetExports from "./widget";
-
 import {
   MODULE_VERSION,
 } from "./version";
@@ -36,7 +34,7 @@ export default examplePlugin;
  */
 function activateWidgetExtension(app: Application<Widget>, registry: IJupyterWidgetRegistry): void {
   registry.registerWidget({
-    exports: widgetExports,
+    exports: async () => await import(/* webpackChunkName: "ipydagred3" */ "./widget"),
     name: "ipydagred3",
     version: MODULE_VERSION,
   });
