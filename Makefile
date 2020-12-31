@@ -52,8 +52,8 @@ dist: js  ## create dists
 	python -m python setup.py sdist bdist_wheel
 
 publish: dist  ## dist to pypi and npm
-	python -m twine check dist/*.{tar.gz,whl} && twine upload dist/*.{tar.gz,whl}
-	cd js; npm publish
+	python -m twine check dist/*.{tar.gz,whl} && python -m twine upload dist/*.{tar.gz,whl} --skip-existing
+	cd js; npm publish || echo "can't publish - might already exist"
 
 # Thanks to Francoise at marmelab.com for this
 .DEFAULT_GOAL := help
