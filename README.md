@@ -3,8 +3,8 @@
 
 ipywidgets library for drawing directed acyclic graphs in jupyterlab using [dagre-d3](https://github.com/dagrejs/dagre-d3)
 
-[![Build Status](https://dev.azure.com/tpaine154/jupyter/_apis/build/status/timkpaine.ipydagred3?branchName=main)](https://dev.azure.com/tpaine154/jupyter/_build/latest?definitionId=22&branchName=main)
-[![Coverage](https://img.shields.io/azure-devops/coverage/tpaine154/jupyter/22/main)](https://dev.azure.com/tpaine154/jupyter/_build?definitionId=22&_a=summary)
+[![Build Status](https://github.com/timkpaine/ipydagred3/workflows/Build%20Status/badge.svg?branch=main)](https://github.com/timkpaine/ipydagred3/actions?query=workflow%3A%22Build+Status%22)
+[![codecov](https://codecov.io/gh/timkpaine/ipydagred3/branch/main/graph/badge.svg?token=3N6NOPL4RE)](https://codecov.io/gh/timkpaine/ipydagred3)
 [![PyPI](https://img.shields.io/pypi/l/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
 [![PyPI](https://img.shields.io/pypi/v/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
 [![npm](https://img.shields.io/npm/v/ipydagred3.svg)](https://www.npmjs.com/package/ipydagred3)
