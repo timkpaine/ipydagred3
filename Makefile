@@ -49,7 +49,7 @@ labextension: js ## enable labextension
 
 dist: js  ## create dists
 	rm -rf dist build
-	python -m python setup.py sdist bdist_wheel
+	python setup.py sdist bdist_wheel
 	python -m twine check dist/*.{tar.gz,whl} 
 
 publish: dist  ## dist to pypi and npm
