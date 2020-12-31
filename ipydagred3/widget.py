@@ -7,10 +7,10 @@ from ._version import __version__
 
 
 class DagreD3Widget(DOMWidget):
-    _model_name = Unicode('DagreD3Model').tag(sync=True)
+    _model_name = Unicode("DagreD3Model").tag(sync=True)
     _model_module = Unicode("ipydagred3").tag(sync=True)
     _model_module_version = Unicode("^" + __version__).tag(sync=True)
-    _view_name = Unicode('DagreD3View').tag(sync=True)
+    _view_name = Unicode("DagreD3View").tag(sync=True)
     _view_module = Unicode("ipydagred3").tag(sync=True)
     _view_module_version = Unicode("^" + __version__).tag(sync=True)
 
@@ -38,8 +38,8 @@ class DagreD3Widget(DOMWidget):
         self._click_handlers(self, value)
 
     def _handle_click_msg(self, _, content, buffers):
-        if content.get('event', '') == 'click':
-            self.click(content.get('value', ''))
+        if content.get("event", "") == "click":
+            self.click(content.get("value", ""))
 
     @wraps(Graph.setGraph)
     def setGraph(self, *args, **kwargs):
@@ -57,6 +57,6 @@ class DagreD3Widget(DOMWidget):
         self.send(msg)
         self._graph = self.graph.to_dict()
 
-    @observe('graph')
+    @observe("graph")
     def _observe_graph(self, change):
-        self._graph = change['new'].to_dict()
+        self._graph = change["new"].to_dict()
