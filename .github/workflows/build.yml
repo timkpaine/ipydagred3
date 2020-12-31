@@ -35,7 +35,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        python -m pip install --upgrade pip setuptools wheel twine
         python -m pip install -e .[dev]
         cd js; yarn
 
@@ -46,6 +46,10 @@ jobs:
     - name: Test
       run: |
         make tests
+
+    - name: Twine check
+      run: |
+        make dist
 
     - name: Upload test results
       uses: actions/upload-artifact@v2
