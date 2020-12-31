@@ -15,7 +15,12 @@ class Graph(HasTraits):
     _widget = None
 
     def __init__(self, directed=True, multigraph=False, compound=False, attrs=None):
-        super(Graph, self).__init__(directed=directed, multigraph=multigraph, compound=compound, attrs=attrs or {})
+        super(Graph, self).__init__(
+            directed=directed,
+            multigraph=multigraph,
+            compound=compound,
+            attrs=attrs or {},
+        )
 
     def isDirected(self):
         return self.directed
@@ -40,7 +45,13 @@ class Graph(HasTraits):
             if isinstance(edge[0], Node):
                 return any((e for e in self.edges if e.v == edge[0] and e.w == edge[1]))
             else:
-                return any((e for e in self.edges if e.v.name == edge[0] and e.w.name == edge[1]))
+                return any(
+                    (
+                        e
+                        for e in self.edges
+                        if e.v.name == edge[0] and e.w.name == edge[1]
+                    )
+                )
         return edge in (e.label for e in self.edges)
 
     # inEdges(inNodeName: string, outNodeName?: string): Edge[]|undefined;
@@ -54,11 +65,13 @@ class Graph(HasTraits):
             if edge_or_node1.w not in self.nodes:
                 self.setNode(edge_or_node1.w)
             self.edges.append(edge_or_node1)
-            edge_or_node1['label'] = label or edge_or_node1.label
-            edge_or_node1['tooltip'] = attrs.pop("tooltip", edge_or_node1.tooltip)
-            edge_or_node1['labelpos'] = attrs.pop("labelpos", edge_or_node1.labelpos)
-            edge_or_node1['labeloffset'] = attrs.pop("labeloffset", edge_or_node1.labeloffset)
-            edge_or_node1['attrs'].update(attrs)
+            edge_or_node1["label"] = label or edge_or_node1.label
+            edge_or_node1["tooltip"] = attrs.pop("tooltip", edge_or_node1.tooltip)
+            edge_or_node1["labelpos"] = attrs.pop("labelpos", edge_or_node1.labelpos)
+            edge_or_node1["labeloffset"] = attrs.pop(
+                "labeloffset", edge_or_node1.labeloffset
+            )
+            edge_or_node1["attrs"].update(attrs)
             return edge_or_node1
         if isinstance(edge_or_node1, Node):
             node1 = edge_or_node1
@@ -71,8 +84,7 @@ class Graph(HasTraits):
         edge = Edge(node1, node2, label=label, **attrs)
         edge._setGraph(self)
         self.edges.append(edge)
-        self.post({"type": "setEdge",
-                   "source": edge.to_dict()})
+        self.post({"type": "setEdge", "source": edge.to_dict()})
         return edge
 
     # TODO
@@ -119,8 +131,7 @@ class Graph(HasTraits):
                 node.attrs.update(attrs)
 
         node._setGraph(self)
-        self.post({"type": "setNode",
-                   "source": node.to_dict()})
+        self.post({"type": "setNode", "source": node.to_dict()})
         return node
 
     # setParent(childName: string, parentName: string): void;
@@ -139,33 +150,30 @@ class Graph(HasTraits):
 
     def _notify_change(self, source, attr, value):
         if isinstance(source, Edge):
-            self.post({"type": "edge",
-                       "source": source.to_dict()})
+            self.post({"type": "edge", "source": source.to_dict()})
 
         elif isinstance(source, Node):
-            self.post({"type": "node",
-                       "source": source.to_dict()})
+            self.post({"type": "node", "source": source.to_dict()})
         elif source == self:
-            self.post({"type": "graph",
-                       "source": self.to_dict()})
+            self.post({"type": "graph", "source": self.to_dict()})
         else:
-            raise Exception('Unknown source: {}'.format(source))
+            raise Exception("Unknown source: {}".format(source))
 
-    @observe('directed')
+    @observe("directed")
     def _observe_directed(self, change):
-        self._notify_change(self, 'directed', change['new'])
+        self._notify_change(self, "directed", change["new"])
 
-    @observe('multigraph')
+    @observe("multigraph")
     def _observe_multigraph(self, change):
-        self._notify_change(self, 'multigraph', change['new'])
+        self._notify_change(self, "multigraph", change["new"])
 
-    @observe('compound')
+    @observe("compound")
     def _observe_compound(self, change):
-        self._notify_change(self, 'compound', change['new'])
+        self._notify_change(self, "compound", change["new"])
 
-    @observe('attrs')
+    @observe("attrs")
     def _observe_attrs(self, change):
-        self._notify_change(self, 'attrs', change['new'])
+        self._notify_change(self, "attrs", change["new"])
 
     def to_dict(self):
         ret = {}

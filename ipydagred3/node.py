@@ -11,7 +11,14 @@ class Node(HasTraits):
     _graph = None
 
     def __init__(self, name, label="", shape="rect", tooltip="", **attrs):
-        super(Node, self).__init__(self, name=name, label=label or name, shape=shape, tooltip=tooltip or label or name, attrs=attrs or {})
+        super(Node, self).__init__(
+            self,
+            name=name,
+            label=label or name,
+            shape=shape,
+            tooltip=tooltip or label or name,
+            attrs=attrs or {},
+        )
 
     def _setGraph(self, g):
         self._graph = g
@@ -21,30 +28,34 @@ class Node(HasTraits):
             return
         self._graph._notify_change(self, attr, value)
 
-    @observe('name')
+    @observe("name")
     def _observe_name(self, change):
-        self._notify_change('name', change['new'])
+        self._notify_change("name", change["new"])
 
-    @observe('label')
+    @observe("label")
     def _observe_label(self, change):
-        self._notify_change('label', change['new'])
+        self._notify_change("label", change["new"])
 
-    @observe('shape')
+    @observe("shape")
     def _observe_shape(self, change):
-        self._notify_change('shape', change['new'])
+        self._notify_change("shape", change["new"])
 
-    @observe('tooltip')
+    @observe("tooltip")
     def _observe_tooltip(self, change):
-        self._notify_change('tooltip', change['new'])
+        self._notify_change("tooltip", change["new"])
 
-    @observe('attrs')
+    @observe("attrs")
     def _observe_attrs(self, change):
-        self._notify_change('attrs', change['new'])
+        self._notify_change("attrs", change["new"])
 
     @validate("shape")
     def _validate_shape(self, proposal):
         if proposal.value not in ("rect", "circle", "ellipse", "diamond"):
-            raise TraitError('Shape must be in ("rect", "circle", "ellipse", "diamond"), got: {}'.format(proposal))
+            raise TraitError(
+                'Shape must be in ("rect", "circle", "ellipse", "diamond"), got: {}'.format(
+                    proposal
+                )
+            )
         return proposal.value
 
     def to_dict(self):
