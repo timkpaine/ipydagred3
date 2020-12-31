@@ -28,6 +28,7 @@ requires_dev = requires + [
     "bump2version>=1.0.0",
     "flake8>=3.7.8",
     "flake8-black>=0.2.1",
+    "jupyter_packaging",
     "mock",
     "pytest>=4.3.0",
     "pytest-cov>=2.6.1",
