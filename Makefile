@@ -49,10 +49,11 @@ labextension: js ## enable labextension
 
 dist: js  ## create dists
 	rm -rf dist build
-	python -m python setup.py sdist bdist_wheel
+	python setup.py sdist bdist_wheel
+	python -m twine check dist/*
 
 publish: dist  ## dist to pypi and npm
-	python -m twine check dist/*.{tar.gz,whl} && python -m twine upload dist/*.{tar.gz,whl} --skip-existing
+	python -m twine upload dist/* --skip-existing
 	cd js; npm publish || echo "can't publish - might already exist"
 
 # Thanks to Francoise at marmelab.com for this

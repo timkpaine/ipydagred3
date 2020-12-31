@@ -30,20 +30,24 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 If you are using Jupyter Notebook 5.2 or earlier, you may also need to enable
 the nbextension:
+
 ```bash
 jupyter nbextension enable --py [--sys-prefix|--user|--system] ipydagred3
 ```
 
 ## Features
+
 - Dynamically create and modify graphs from python
 - Change color, shape, tooltip, etc
 - Click events (click on node or edge and get event in ipywidget indicating source, good for node inspector tools)
 
 
 ### Tooltips and Click events
+
 ![](https://raw.githubusercontent.com/timkpaine/ipydagred3/main/docs/img/example2.gif)
 
 ## Examples
+
 Network example from the first gif
 [Network Example](https://github.com/timkpaine/ipydagred3/tree/main/docs/examples/example.ipynb)
 
