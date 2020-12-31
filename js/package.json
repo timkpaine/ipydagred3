@@ -101,7 +101,8 @@
   "resolutions": {
     "acorn": "^6.4.1",
     "kind-of": "^6.0.3",
-    "minimist": "^0.2.1"
+    "minimist": "^0.2.1",
+    "node-notifier": "^8.0.1"
   },
   "jupyterlab": {
     "extension": "lib/plugin"
