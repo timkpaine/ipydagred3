@@ -12,7 +12,7 @@ lint: ## run linter
 	python -m flake8 ipydagred3 setup.py
 	cd js; yarn lint
 
-fix:  ## run autopep8/tslint fix
+fix:  ## run black/tslint fix
 	python -m black ipydagred3/ setup.py
 	cd js; yarn fix
 
