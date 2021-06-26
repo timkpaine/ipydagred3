@@ -54,7 +54,7 @@ class DagreD3View extends DOMWidgetView {
 
     this.renderer = new render();
 
-    this.displayed.then(() => {
+    void this.displayed.then(() => {
       // Set up zoom support
       const zoom = d3.zoom()
         .on("zoom", () => {
@@ -64,9 +64,9 @@ class DagreD3View extends DOMWidgetView {
 
       // Center the graph
       const initialScale = 0.75;
-      this.svg.call(zoom.transform, d3.zoomIdentity.translate((parseInt(this.svg.attr("width"), 10) - this.graph.graph().width * initialScale) / 2, 20).scale(initialScale));
+      this.svg.call(zoom.transform, d3.zoomIdentity.translate((parseInt(this.svg.attr("width"), 10) - (this.graph.graph().width || 0) * initialScale) / 2, 20).scale(initialScale));
 
-      this.svg.attr("height", this.graph.graph().height * initialScale + 40);
+      this.svg.attr("height", (this.graph.graph().height || 0) * initialScale + 40);
       this.graph_changed();
     });
   }
