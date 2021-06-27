@@ -1,4 +1,3 @@
-from codecs import open
 from os import path
 
 from jupyter_packaging import (
