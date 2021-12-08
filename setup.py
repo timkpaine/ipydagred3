@@ -3,14 +3,12 @@ from os import path
 from jupyter_packaging import (
     combine_commands,
     create_cmdclass,
-    ensure_python,
     ensure_targets,
     get_version,
     install_npm,
 )
 from setuptools import find_packages, setup
 
-ensure_python(">=3.7")
 pjoin = path.join
 name = "ipydagred3"
 here = path.abspath(path.dirname(__file__))
@@ -77,6 +75,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Framework :: Jupyter",
         "Framework :: Jupyter :: JupyterLab",
     ],
@@ -103,4 +102,5 @@ setup(
         ("etc/jupyter/nbconfig/notebook.d", ["ipydagred3.json"]),
     ],
     zip_safe=False,
+    python_requires=">=3.7",
 )
