@@ -4,7 +4,7 @@ import {graphlib, render} from "dagre-d3";
 import * as d3 from "d3";
 
 // Import the CSS
-import "../css/widget.css";
+import "../style/index.css";
 
 export class DagreD3View extends DOMWidgetView {
   graph;
