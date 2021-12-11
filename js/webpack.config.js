@@ -3,7 +3,6 @@ const version = require('./package.json').version;
 
 // Custom webpack rules
 const rules = [
-  { test: /\.ts$/, loader: 'ts-loader' },
   { test: /\.js$/, loader: 'source-map-loader' },
   { test: /\.css$/, use: ['style-loader', 'css-loader']}
 ];
@@ -13,7 +12,7 @@ const externals = ['@jupyter-widgets/base'];
 
 const resolve = {
   // Add '.ts' and '.tsx' as resolvable extensions.
-  extensions: [".webpack.js", ".web.js", ".ts", ".js"]
+  extensions: [".webpack.js", ".web.js", ".js"]
 };
 
 module.exports = [
@@ -24,7 +23,7 @@ module.exports = [
    * the notebook.
    */
   {
-    entry: './src/extension.ts',
+    entry: './src/extension.js',
     output: {
       filename: 'index.js',
       path: path.resolve(__dirname, '..', 'ipydagred3', 'nbextension', 'static'),
@@ -68,7 +67,7 @@ module.exports = [
    * the custom widget embedder.
    */
   {
-    entry: './src/index.ts',
+    entry: './src/index.js',
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
@@ -91,7 +90,7 @@ module.exports = [
    * This bundle is used to embed widgets in the package documentation.
    */
   {
-    entry: './src/index.ts',
+    entry: './src/index.js',
     output: {
       filename: 'embed-bundle.js',
       path: path.resolve(__dirname, '..', 'docs', 'source', '_static'),
