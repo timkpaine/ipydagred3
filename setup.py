@@ -1,3 +1,11 @@
+# *****************************************************************************
+#
+# Copyright (c) 2020, the ipydagred3 authors.
+#
+# This file is part of the ipydagred3 library, distributed under the terms of
+# the Apache License 2.0.  The full license can be found in the LICENSE file.
+#
+from codecs import open
 from os import path
 
 from jupyter_packaging import (
@@ -18,10 +26,12 @@ version = get_version(pjoin(here, name, "_version.py"))
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read().replace("\r\n", "\n")
 
-requires = ["ipywidgets>=7.5.1"]
+requires = [
+    "ipywidgets>=7.5.1",
+]
 
 requires_dev = requires + [
-    "black>=20.",
+    "black>=20.8b1",
     "bump2version>=1.0.0",
     "flake8>=3.7.8",
     "flake8-black>=0.2.1",
@@ -41,23 +51,31 @@ jstargets = [
     pjoin(jshere, "lib", "index.js"),
 ]
 
-package_data_spec = {name: ["nbextension/static/*.*js*", "labextension/*.tgz"]}
-
-data_files_spec = [
+data_spec = [
+    # Lab extension installed by default:
     ("share/jupyter/nbextensions/ipydagred3", nb_path, "*.js*"),
-    ("share/jupyter/lab/extensions", lab_path, "*.tgz"),
     ("etc/jupyter/nbconfig/notebook.d", here, "ipydagred3.json"),
+    (
+        "share/jupyter/labextensions/ipydagred3",
+        "ipydagred3/labextension",
+        "**",
+    ),
+    # Config to enable server extension by default:
+    ("etc/jupyter/jupyter_server_config.d", "jupyter-config", "*.json"),
 ]
 
 
-cmdclass = create_cmdclass(
-    "jsdeps", package_data_spec=package_data_spec, data_files_spec=data_files_spec
-)
-cmdclass["jsdeps"] = combine_commands(
+cmdclass = create_cmdclass("js", data_files_spec=data_spec)
+cmdclass["js"] = combine_commands(
     install_npm(jshere, build_cmd="build:all"),
-    ensure_targets(jstargets),
+    ensure_targets(
+        [
+            pjoin(jshere, "lib", "index.js"),
+            pjoin(jshere, "style", "index.css"),
+            pjoin(here, "ipydagred3", "labextension", "package.json"),
+        ]
+    ),
 )
-
 
 setup(
     name=name,
@@ -88,19 +106,10 @@ setup(
         ]
     ),
     install_requires=requires,
-    extras_require={"dev": requires_dev},
+    extras_require={
+        "dev": requires_dev,
+    },
     include_package_data=True,
-    data_files=[
-        (
-            "share/jupyter/nbextensions/ipydagred3",
-            [
-                "ipydagred3/nbextension/static/extension.js",
-                "ipydagred3/nbextension/static/index.js",
-                "ipydagred3/nbextension/static/index.js.map",
-            ],
-        ),
-        ("etc/jupyter/nbconfig/notebook.d", ["ipydagred3.json"]),
-    ],
     zip_safe=False,
     python_requires=">=3.7",
 )
