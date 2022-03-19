@@ -8,11 +8,7 @@
 from codecs import open
 from os import path
 
-from jupyter_packaging import (
-    wrap_installers,
-    npm_builder,
-    get_data_files
-)
+from jupyter_packaging import wrap_installers, npm_builder, get_data_files
 from setuptools import find_packages, setup
 
 pjoin = path.join
@@ -32,15 +28,19 @@ requires_test = [
     "pytest-cov>=2.6.1",
 ]
 
-requires_dev = requires + requires_test + [
-    "black>=20.8b1",
-    "bump2version>=1.0.0",
-    "flake8>=3.7.8",
-    "flake8-black>=0.2.1",
-    "jupyter_packaging",
-    "Sphinx>=1.8.4",
-    "sphinx-markdown-builder>=0.5.2",
-]
+requires_dev = (
+    requires
+    + requires_test
+    + [
+        "black>=20.8b1",
+        "bump2version>=1.0.0",
+        "flake8>=3.7.8",
+        "flake8-black>=0.2.1",
+        "jupyter_packaging",
+        "Sphinx>=1.8.4",
+        "sphinx-markdown-builder>=0.5.2",
+    ]
+)
 
 ext_path = pjoin(here, name, "extension")
 nb_path = pjoin(here, name, "nbextension", "static")
@@ -70,9 +70,7 @@ ensured_targets = [
     pjoin(here, "ipydagred3", "labextension", "package.json"),
 ]
 
-builder = npm_builder(
-    build_cmd="build:all", path=jshere
-)
+builder = npm_builder(build_cmd="build:all", path=jshere)
 
 setup(
     name=name,
@@ -96,7 +94,9 @@ setup(
     ],
     platforms="Linux, Mac OS X, Windows",
     keywords=["Jupyter", "Jupyterlab", "Widgets", "IPython", "Graph", "Data", "DAG"],
-    cmdclass=wrap_installers(pre_develop=builder, pre_dist=builder, ensured_targets=ensured_targets),
+    cmdclass=wrap_installers(
+        pre_develop=builder, pre_dist=builder, ensured_targets=ensured_targets
+    ),
     data_files=get_data_files(data_spec),
     packages=find_packages(
         exclude=[
