@@ -1,60 +1,67 @@
+testpy: ## Clean and Make unit tests
+	python -m pytest -v ipydagred3/tests --cov=ipydagred3 --junitxml=python_junit.xml --cov-report=xml --cov-branch
+
 testjs: ## Clean and Make js tests
 	cd js; yarn test
 
-testpy: ## Clean and Make unit tests
-	python -m pytest -v ipydagred3/tests --cov=ipydagred3
+tests: testpy testjs ## run the tests
 
-tests: lint ## run the tests
-	python -m pytest -v ipydagred3/tests --cov=ipydagred3 --junitxml=python_junit.xml --cov-report=xml --cov-branch
-	cd js; yarn test
-
-lint: ## run linter
+lintpy:  ## Black/flake8 python
+	python -m black --check ipydagred3 setup.py
 	python -m flake8 ipydagred3 setup.py
+
+lintjs:  ## ESlint javascript
 	cd js; yarn lint
 
-fix:  ## run black/tslint fix
+lint: lintpy lintjs  ## run linter
+
+fixpy:  ## Black python
 	python -m black ipydagred3/ setup.py
+
+fixjs:  ## ESlint Autofix JS
 	cd js; yarn fix
 
-annotate: ## MyPy type annotation check
-	python -m mypy -s ipydagred3
+fix: fixpy fixjs  ## run black/tslint fix
 
-annotate_l: ## MyPy type annotation check - count only
-	python -m mypy -s ipydagred3 | wc -l
+buildpy:  ## build python
+	python setup.py build
 
-clean: ## clean the repository
-	find . -name "__pycache__" | xargs  rm -rf
-	find . -name "*.pyc" | xargs rm -rf
-	find . -name ".ipynb_checkpoints" | xargs  rm -rf
-	rm -rf .coverage coverage cover htmlcov logs build dist *.egg-info lib node_modules
-	make -C ./docs clean
-	git clean -fd
-
-docs:  ## make documentation
-	make -C ./docs html
-	open ./docs/_build/html/index.html
-
-install:  ## install to site-packages
-	python -m pip install .
-
-serverextension: install ## enable serverextension
-	python -m jupyter serverextension enable --py ipydagred3
-
-js:  ## build javascript
+buildjs:  ## build javascript
 	cd js; yarn
 	cd js; yarn build
 
-labextension: js ## enable labextension
-	cd js; jupyter labextension install .
+build: buildpy buildjs  ## build python/javascript
+
+develop:  ## install to site-packages in editable mode
+	python -m pip install -e .[develop]
+
+install:  ## install to site-packages
+	python -m pip install .
 
 dist: js  ## create dists
 	rm -rf dist build
 	python setup.py sdist bdist_wheel
 	python -m twine check dist/*
 
-publish: dist  ## dist to pypi and npm
+publishpy:  ## dist to pypi
 	python -m twine upload dist/* --skip-existing
+
+publishjs:  ## dist to npm
 	cd js; npm publish || echo "can't publish - might already exist"
+
+publish: dist publishpy publishjs  ## dist to pypi and npm
+
+docs:  ## make documentation
+	make -C ./docs html
+	open ./docs/_build/html/index.html
+
+clean: ## clean the repository
+	find . -name "__pycache__" | xargs  rm -rf
+	find . -name "*.pyc" | xargs rm -rf
+	find . -name ".ipynb_checkpoints" | xargs  rm -rf
+	rm -rf .coverage coverage cover htmlcov logs build dist *.egg-info lib node_modules .pytest_cache coverage.xml *junit.xml
+	make -C ./docs clean
+	git clean -fd
 
 # Thanks to Francoise at marmelab.com for this
 .DEFAULT_GOAL := help
@@ -64,4 +71,4 @@ help:
 print-%:
 	@echo '$*=$($*)'
 
-.PHONY: clean install serverextension labextension test tests help docs dist js
+.PHONY: testjs testpy tests lintpy lintjs lint fixpy fixjs fix buildpy buildjs build develop install labextension dist publishpy publishjs publish docs clean

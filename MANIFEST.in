@@ -1,5 +1,6 @@
 include LICENSE
 include README.md
+include CODE_OF_CONDUCT.md
 include CONTRIBUTING.md
 
 include requirements.txt
@@ -18,6 +19,8 @@ prune js/lib
 prune js/package-lock.json
 prune js/yarn.lock
 
+# get rid of binder
+prune binder
 
 # Patterns to exclude from any directory
 global-exclude *~
