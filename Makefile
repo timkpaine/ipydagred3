@@ -4,6 +4,7 @@ testpy: ## Clean and Make unit tests
 testjs: ## Clean and Make js tests
 	cd js; yarn test
 
+test: tests
 tests: testpy testjs ## run the tests
 
 lintpy:  ## Black/flake8 python
@@ -23,6 +24,7 @@ fixjs:  ## ESlint Autofix JS
 
 fix: fixpy fixjs  ## run black/tslint fix
 
+check: checks
 checks:  ## run lint and other checks
 	check-manifest
 
@@ -69,4 +71,4 @@ help:
 print-%:
 	@echo '$*=$($*)'
 
-.PHONY: testjs testpy tests lintpy lintjs lint fixpy fixjs fix checks build develop install labextension dist publishpy publishjs publish docs clean
+.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix checks check build develop install labextension dist publishpy publishjs publish docs clean

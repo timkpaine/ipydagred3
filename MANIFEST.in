@@ -7,8 +7,14 @@ include setup.cfg
 include pyproject.toml
 include Makefile
 
-# get rid of js
+# grab js
 prune js
+prune js/coverage
+prune js/dist
+prune js/docs
+prune js/lib
+prune js/package-lock.json
+prune js/yarn.lock
 
 # get rid of binder
 prune binder
