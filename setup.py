@@ -43,6 +43,7 @@ requires_dev = requires + [
     "sphinx-markdown-builder>=0.5.2",
 ]
 
+ext_path = pjoin(here, name, "extension")
 nb_path = pjoin(here, name, "nbextension", "static")
 lab_path = pjoin(here, name, "labextension")
 
@@ -54,7 +55,7 @@ jstargets = [
 data_spec = [
     # Lab extension installed by default:
     ("share/jupyter/nbextensions/ipydagred3", nb_path, "*.js*"),
-    ("etc/jupyter/nbconfig/notebook.d", here, "ipydagred3.json"),
+    ("etc/jupyter/nbconfig/notebook.d", ext_path, "ipydagred3.json"),
     (
         "share/jupyter/labextensions/ipydagred3",
         "ipydagred3/labextension",
