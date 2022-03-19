@@ -108,6 +108,7 @@ setup(
     tests_require=requires_test,
     extras_require={
         "dev": requires_dev,
+        "develop": requires_dev,
     },
     include_package_data=True,
     zip_safe=False,
