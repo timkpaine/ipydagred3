@@ -13,12 +13,6 @@ from jupyter_packaging import (
     npm_builder,
     get_data_files
 )
-from jupyter_packaging import (
-    combine_commands,
-    create_cmdclass,
-    ensure_targets,
-    install_npm,
-)
 from setuptools import find_packages, setup
 
 pjoin = path.join
@@ -76,8 +70,8 @@ ensured_targets = [
     pjoin(here, "ipydagred3", "labextension", "package.json"),
 ]
 
-post_develop = npm_builder(
-    build_cmd="build:all", source_dir="src", build_dir=lab_path
+builder = npm_builder(
+    build_cmd="build:all", path=jshere
 )
 
 setup(
@@ -102,7 +96,7 @@ setup(
     ],
     platforms="Linux, Mac OS X, Windows",
     keywords=["Jupyter", "Jupyterlab", "Widgets", "IPython", "Graph", "Data", "DAG"],
-    cmdclass=wrap_installers(post_develop=post_develop, ensured_targets=ensured_targets),
+    cmdclass=wrap_installers(pre_develop=builder, pre_dist=builder, ensured_targets=ensured_targets),
     data_files=get_data_files(data_spec),
     packages=find_packages(
         exclude=[

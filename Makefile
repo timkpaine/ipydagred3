@@ -23,24 +23,21 @@ fixjs:  ## ESlint Autofix JS
 
 fix: fixpy fixjs  ## run black/tslint fix
 
-buildpy:  ## build python
-	python setup.py build
+checks:  ## run lint and other checks
+	check-manifest
 
-buildjs:  ## build javascript
-	cd js; yarn
-	cd js; yarn build
-
-build: buildpy buildjs  ## build python/javascript
+build:  ## build python/javascript
+	python -m build .
 
 develop:  ## install to site-packages in editable mode
+	python -m pip install --upgrade build pip setuptools twine wheel
+	cd js; yarn
 	python -m pip install -e .[develop]
 
 install:  ## install to site-packages
 	python -m pip install .
 
-dist: js  ## create dists
-	rm -rf dist build
-	python setup.py sdist bdist_wheel
+dist: clean build  ## create dists
 	python -m twine check dist/*
 
 publishpy:  ## dist to pypi
@@ -59,8 +56,8 @@ clean: ## clean the repository
 	find . -name "__pycache__" | xargs  rm -rf
 	find . -name "*.pyc" | xargs rm -rf
 	find . -name ".ipynb_checkpoints" | xargs  rm -rf
-	rm -rf .coverage coverage cover htmlcov logs build dist *.egg-info lib node_modules .pytest_cache coverage.xml *junit.xml
-	rm -rf ipydagred3/labextension ipydagred3/nbextension
+	rm -rf .coverage coverage *.xml build dist *.egg-info lib node_modules .pytest_cache *.egg-info
+	rm -rf ipydagred3/labextension ipydagred3/nbextension/static
 	# make -C ./docs clean
 	git clean -fd
 
@@ -72,4 +69,4 @@ help:
 print-%:
 	@echo '$*=$($*)'
 
-.PHONY: testjs testpy tests lintpy lintjs lint fixpy fixjs fix buildpy buildjs build develop install labextension dist publishpy publishjs publish docs clean
+.PHONY: testjs testpy tests lintpy lintjs lint fixpy fixjs fix checks build develop install labextension dist publishpy publishjs publish docs clean

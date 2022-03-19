@@ -34,13 +34,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools wheel twine
-        python -m pip install -e .[dev]
-        cd js; yarn
+        make develop
 
     - name: Lint
       run: |
         make lint
+
+    - name: Checks
+      run: |
+        make checks
 
     - name: Test
       run: |
