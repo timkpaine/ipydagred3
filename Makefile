@@ -60,7 +60,8 @@ clean: ## clean the repository
 	find . -name "*.pyc" | xargs rm -rf
 	find . -name ".ipynb_checkpoints" | xargs  rm -rf
 	rm -rf .coverage coverage cover htmlcov logs build dist *.egg-info lib node_modules .pytest_cache coverage.xml *junit.xml
-	make -C ./docs clean
+	rm -rf ipydagred3/labextension ipydagred3/nbextension
+	# make -C ./docs clean
 	git clean -fd
 
 # Thanks to Francoise at marmelab.com for this

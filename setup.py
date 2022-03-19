@@ -9,10 +9,14 @@ from codecs import open
 from os import path
 
 from jupyter_packaging import (
+    wrap_installers,
+    npm_builder,
+    get_data_files
+)
+from jupyter_packaging import (
     combine_commands,
     create_cmdclass,
     ensure_targets,
-    get_version,
     install_npm,
 )
 from setuptools import find_packages, setup
@@ -21,7 +25,6 @@ pjoin = path.join
 name = "ipydagred3"
 here = path.abspath(path.dirname(__file__))
 jshere = path.abspath(pjoin(path.dirname(__file__), "js"))
-version = get_version(pjoin(here, name, "_version.py"))
 
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read().replace("\r\n", "\n")
@@ -30,15 +33,17 @@ requires = [
     "ipywidgets>=7.5.1",
 ]
 
-requires_dev = requires + [
+requires_test = [
+    "pytest>=4.3.0",
+    "pytest-cov>=2.6.1",
+]
+
+requires_dev = requires + requires_test + [
     "black>=20.8b1",
     "bump2version>=1.0.0",
     "flake8>=3.7.8",
     "flake8-black>=0.2.1",
     "jupyter_packaging",
-    "mock",
-    "pytest>=4.3.0",
-    "pytest-cov>=2.6.1",
     "Sphinx>=1.8.4",
     "sphinx-markdown-builder>=0.5.2",
 ]
@@ -65,22 +70,19 @@ data_spec = [
     ("etc/jupyter/jupyter_server_config.d", "jupyter-config", "*.json"),
 ]
 
+ensured_targets = [
+    pjoin(jshere, "lib", "index.js"),
+    pjoin(jshere, "style", "index.css"),
+    pjoin(here, "ipydagred3", "labextension", "package.json"),
+]
 
-cmdclass = create_cmdclass("js", data_files_spec=data_spec)
-cmdclass["js"] = combine_commands(
-    install_npm(jshere, build_cmd="build:all"),
-    ensure_targets(
-        [
-            pjoin(jshere, "lib", "index.js"),
-            pjoin(jshere, "style", "index.css"),
-            pjoin(here, "ipydagred3", "labextension", "package.json"),
-        ]
-    ),
+post_develop = npm_builder(
+    build_cmd="build:all", source_dir="src", build_dir=lab_path
 )
 
 setup(
     name=name,
-    version=version,
+    version="0.3.1",
     description="ipywidgets wrapper around dagre-d3",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -100,13 +102,16 @@ setup(
     ],
     platforms="Linux, Mac OS X, Windows",
     keywords=["Jupyter", "Jupyterlab", "Widgets", "IPython", "Graph", "Data", "DAG"],
-    cmdclass=cmdclass,
+    cmdclass=wrap_installers(post_develop=post_develop, ensured_targets=ensured_targets),
+    data_files=get_data_files(data_spec),
     packages=find_packages(
         exclude=[
             "tests",
         ]
     ),
     install_requires=requires,
+    test_suite="ipydagred3.tests",
+    tests_require=requires_test,
     extras_require={
         "dev": requires_dev,
     },
