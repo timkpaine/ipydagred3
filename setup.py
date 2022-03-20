@@ -62,7 +62,7 @@ data_spec = [
         "**",
     ),
     # Config to enable server extension by default:
-    ("etc/jupyter/jupyter_server_config.d", "jupyter-config", "*.json"),
+    ("etc/jupyter/jupyter_server_config.d", ext_path, "*.json"),
 ]
 
 ensured_targets = [
