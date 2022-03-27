@@ -28,12 +28,11 @@
     "url": "https://github.com/timkpaine/ipydagred3"
   },
   "scripts": {
-    "build": "npm run build:lib && npm run build:nbextension && npm run build:labextension",
-    "build:labextension": "yarn clean:labextension && jupyter labextension build .",
-    "build:lib": "babel src/ --source-maps --out-dir ./lib/",
+    "build:babel": "babel src/ --source-maps --out-dir lib/",
+    "build:labextension": "jupyter labextension build .",
     "build:nbextension": "webpack --mode=production",
-    "build:all": "npm run build:lib && npm run build:labextension && npm run build:nbextension",
-    "clean": "npm run clean:lib && npm run clean:nbextension",
+    "build": "npm-run-all build:*",
+    "clean": "npm-run-all clean:*",
     "clean:lib": "rimraf lib",
     "clean:labextension": "rimraf ../ipydagred3/labextension",
     "clean:nbextension": "rimraf ../ipydagred3/nbextension/static/index.js",

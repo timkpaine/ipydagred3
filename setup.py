@@ -8,7 +8,7 @@
 from codecs import open
 from os import path
 
-from jupyter_packaging import wrap_installers, npm_builder, get_data_files
+from jupyter_packaging import get_data_files, npm_builder, wrap_installers
 from setuptools import find_packages, setup
 
 pjoin = path.join
@@ -43,9 +43,9 @@ requires_dev = (
     ]
 )
 
-ext_path = pjoin(here, name, "extension")
-nb_path = pjoin(here, name, "nbextension", "static")
-lab_path = pjoin(here, name, "labextension")
+ext_path = pjoin(name, "extension")
+nb_path = pjoin(name, "nbextension", "static")
+lab_path = pjoin(name, "labextension")
 
 # Representative files that should exist after a successful build
 jstargets = [
@@ -58,7 +58,7 @@ data_spec = [
     ("etc/jupyter/nbconfig/notebook.d", ext_path, "ipydagred3.json"),
     (
         "share/jupyter/labextensions/ipydagred3",
-        "ipydagred3/labextension",
+        lab_path,
         "**",
     ),
     # Config to enable server extension by default:
@@ -68,10 +68,10 @@ data_spec = [
 ensured_targets = [
     pjoin(jshere, "lib", "index.js"),
     pjoin(jshere, "style", "index.css"),
-    pjoin(here, "ipydagred3", "labextension", "package.json"),
+    pjoin(lab_path, "package.json"),
 ]
 
-builder = npm_builder(build_cmd="build:all", path=jshere)
+builder = npm_builder(build_cmd="build", path=jshere)
 
 setup(
     name=name,
