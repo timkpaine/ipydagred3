@@ -68,7 +68,7 @@ data_spec = [
 ensured_targets = [
     pjoin(jshere, "lib", "index.js"),
     pjoin(jshere, "style", "index.css"),
-    pjoin(here, "ipydagred3", "labextension", "package.json"),
+    pjoin(lab_path, "package.json"),
 ]
 
 builder = npm_builder(build_cmd="build", path=jshere)
