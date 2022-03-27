@@ -28,8 +28,8 @@
     "url": "https://github.com/timkpaine/ipydagred3"
   },
   "scripts": {
-    "build:labextension": "jupyter labextension build .",
     "build:babel": "babel src/ --source-maps --out-dir lib/",
+    "build:labextension": "jupyter labextension build .",
     "build:nbextension": "webpack --mode=production",
     "build": "npm-run-all build:*",
     "clean": "npm-run-all clean:*",
