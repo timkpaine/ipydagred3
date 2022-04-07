@@ -32,7 +32,7 @@ build: clean  ## build python/javascript
 	python -m build . -n -s -w
 
 develop:  ## install to site-packages in editable mode
-	python -m pip install --upgrade build pip setuptools twine wheel
+	python -m pip install --upgrade build pip setuptools twine wheel jupyterlab>3 "jupyter-packaging<2"
 	cd js; yarn
 	python -m pip install -e .[develop]
 
