@@ -7,6 +7,10 @@ include setup.cfg
 include pyproject.toml
 include Makefile
 
+recursive-include ipydagred3/extension *.*
+recursive-include ipydagred3/labextension *.*
+recursive-include ipydagred3/nbextension *.*
+
 # grab js
 graft js
 prune js/coverage
