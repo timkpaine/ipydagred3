@@ -75,7 +75,7 @@ builder = npm_builder(build_cmd="build", path=jshere)
 
 setup(
     name=name,
-    version="0.3.2",
+    version="0.3.3",
     description="ipywidgets wrapper around dagre-d3",
     long_description=long_description,
     long_description_content_type="text/markdown",
