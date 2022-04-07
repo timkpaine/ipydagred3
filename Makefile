@@ -29,10 +29,10 @@ checks:  ## run lint and other checks
 	check-manifest
 
 build: clean  ## build python/javascript
-	python -m build . -n -s -w
+	python -m build . -s -w
 
 develop:  ## install to site-packages in editable mode
-	python -m pip install --upgrade build pip setuptools twine wheel jupyterlab>3 "jupyter-packaging<2"
+	python -m pip install --upgrade build pip setuptools twine wheel
 	cd js; yarn
 	python -m pip install -e .[develop]
 
