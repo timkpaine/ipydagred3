@@ -26,7 +26,7 @@ fix: fixpy fixjs  ## run black/tslint fix
 
 check: checks
 checks:  ## run lint and other checks
-	check-manifest
+	check-manifest -v
 
 build:  ## build python/javascript
 	python -m build .
