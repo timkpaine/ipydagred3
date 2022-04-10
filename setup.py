@@ -96,7 +96,7 @@ setup(
     platforms="Linux, Mac OS X, Windows",
     keywords=["Jupyter", "Jupyterlab", "Widgets", "IPython", "Graph", "Data", "DAG"],
     cmdclass=wrap_installers(
-        post_develop=builder, pre_dist=builder, ensured_targets=ensured_targets
+        post_develop=builder, ensured_targets=ensured_targets
     ),
     data_files=get_data_files(data_spec),
     packages=find_packages(

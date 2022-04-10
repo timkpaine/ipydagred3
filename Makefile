@@ -29,7 +29,7 @@ checks:  ## run lint and other checks
 	check-manifest
 
 build: clean  ## build python/javascript
-	python -m build . -s -w
+	python -m build .
 
 develop:  ## install to site-packages in editable mode
 	python -m pip install --upgrade build pip setuptools twine wheel
