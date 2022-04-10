@@ -54,7 +54,7 @@ jstargets = [
 
 data_spec = [
     # Lab extension installed by default:
-    ("share/jupyter/nbextensions/ipydagred3", nb_path, "*.js*"),
+    ("share/jupyter/nbextensions/ipydagred3", nb_path, "**"),
     ("etc/jupyter/nbconfig/notebook.d", ext_path, "ipydagred3.json"),
     (
         "share/jupyter/labextensions/ipydagred3",
@@ -66,9 +66,9 @@ data_spec = [
 ]
 
 ensured_targets = [
-    pjoin(jshere, "lib", "index.js"),
-    pjoin(jshere, "style", "index.css"),
     pjoin(lab_path, "package.json"),
+    pjoin(lab_path, "static", "style.js"),
+    pjoin(nb_path, "index.js"),
 ]
 
 builder = npm_builder(build_cmd="build", path=jshere)
@@ -96,14 +96,10 @@ setup(
     platforms="Linux, Mac OS X, Windows",
     keywords=["Jupyter", "Jupyterlab", "Widgets", "IPython", "Graph", "Data", "DAG"],
     cmdclass=wrap_installers(
-        pre_develop=builder, ensured_targets=ensured_targets
+        post_develop=builder, ensured_targets=ensured_targets
     ),
     data_files=get_data_files(data_spec),
-    packages=find_packages(
-        exclude=[
-            "tests",
-        ]
-    ),
+    packages=find_packages(),
     install_requires=requires,
     test_suite="ipydagred3.tests",
     tests_require=requires_test,
