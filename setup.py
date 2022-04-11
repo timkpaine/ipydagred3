@@ -54,7 +54,7 @@ jstargets = [
 
 data_spec = [
     # Lab extension installed by default:
-    ("share/jupyter/nbextensions/ipydagred3", nb_path, "*.js*"),
+    ("share/jupyter/nbextensions/ipydagred3", nb_path, "**"),
     ("etc/jupyter/nbconfig/notebook.d", ext_path, "ipydagred3.json"),
     (
         "share/jupyter/labextensions/ipydagred3",
@@ -66,16 +66,18 @@ data_spec = [
 ]
 
 ensured_targets = [
-    pjoin(jshere, "lib", "index.js"),
-    pjoin(jshere, "style", "index.css"),
     pjoin(lab_path, "package.json"),
+    pjoin(lab_path, "static", "style.js"),
+    pjoin(nb_path, "index.js"),
 ]
 
-builder = npm_builder(build_cmd="build", path=jshere)
+builder = npm_builder(
+    build_cmd="build", path=jshere, source_dir=pjoin(jshere, "src"), build_dir=lab_path
+)
 
 setup(
     name=name,
-    version="0.3.3",
+    version="0.3.4",
     description="ipywidgets wrapper around dagre-d3",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -99,11 +101,9 @@ setup(
         post_develop=builder, pre_dist=builder, ensured_targets=ensured_targets
     ),
     data_files=get_data_files(data_spec),
-    packages=find_packages(
-        exclude=[
-            "tests",
-        ]
-    ),
+    include_package_data=True,
+    zip_safe=False,
+    packages=find_packages(),
     install_requires=requires,
     test_suite="ipydagred3.tests",
     tests_require=requires_test,
@@ -111,7 +111,5 @@ setup(
         "dev": requires_dev,
         "develop": requires_dev,
     },
-    include_package_data=True,
-    zip_safe=False,
     python_requires=">=3.7",
 )

@@ -1,6 +1,6 @@
 {
   "name": "ipydagred3",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A Custom Jupyter Widget Library",
   "keywords": [
     "jupyter",
@@ -31,7 +31,7 @@
     "build:babel": "babel src/ --source-maps --out-dir lib/",
     "build:labextension": "jupyter labextension build .",
     "build:nbextension": "webpack --mode=production",
-    "build": "npm-run-all build:*",
+    "build": "npm-run-all clean build:*",
     "clean": "npm-run-all clean:*",
     "clean:lib": "rimraf lib",
     "clean:labextension": "rimraf ../ipydagred3/labextension",
