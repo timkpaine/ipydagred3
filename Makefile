@@ -59,7 +59,7 @@ clean: ## clean the repository
 	find . -name "*.pyc" | xargs rm -rf
 	find . -name ".ipynb_checkpoints" | xargs  rm -rf
 	rm -rf .coverage coverage *.xml build dist *.egg-info lib node_modules .pytest_cache *.egg-info
-	rm -rf ipydagred3/labextension ipydagred3/nbextension/static
+	rm -rf ipydagred3/labextension ipydagred3/nbextension/static/index*
 	cd js && yarn clean
 	# make -C ./docs clean
 	git clean -fd
