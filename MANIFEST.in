@@ -1,6 +1,5 @@
 include LICENSE
 include README.md
-include CODE_OF_CONDUCT.md
 include CONTRIBUTING.md
 
 include setup.cfg
@@ -19,7 +18,6 @@ prune js/dist
 prune js/docs
 prune js/lib
 prune js/node_modules
-prune js/package-lock.json
 prune js/yarn.lock
 
 # get rid of binder
