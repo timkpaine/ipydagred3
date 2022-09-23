@@ -75,7 +75,7 @@ builder = npm_builder(
 
 setup(
     name=name,
-    version="0.3.6",
+    version="0.3.7",
     description="ipywidgets wrapper around dagre-d3",
     long_description=long_description,
     long_description_content_type="text/markdown",

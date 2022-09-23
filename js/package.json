@@ -1,6 +1,6 @@
 {
   "name": "ipydagred3",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "A Custom Jupyter Widget Library",
   "keywords": [
     "jupyter",
