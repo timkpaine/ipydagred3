@@ -60,8 +60,7 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^6.0.1",
-    "d3": "^5.15.0",
-    "dagre-d3": "^0.6.4"
+    "dagre-d3-es": "^7.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.10",
