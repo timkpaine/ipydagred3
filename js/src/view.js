@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import {DOMWidgetView} from "@jupyter-widgets/base";
-import {graphlib, render} from "dagre-d3";
+import {graphlib, render} from "dagre-d3-es";
 import * as d3 from "d3";
 
 // Import the CSS
@@ -50,8 +50,8 @@ export class DagreD3View extends DOMWidgetView {
 
     this.displayed.then(() => {
       // Set up zoom support
-      const zoom = d3.zoom().on("zoom", () => {
-        this.inner.attr("transform", d3.event.transform);
+      const zoom = d3.zoom().on("zoom", (event) => {
+        this.inner.attr("transform", event.transform);
       });
       this.svg.call(zoom);
 
@@ -80,16 +80,17 @@ export class DagreD3View extends DOMWidgetView {
     const tooltip = d3.select("#dagred3tooltip");
     this.inner
       .selectAll("g.node")
-      .attr("data-tooltip", (v) => this.graph.node(v).tooltip)
-      .on("click", (v) => {
-        this.send({event: "click", value: v});
+      // TODO commenting out for d3v5 -> d3v7 seems to have no effect ¯\_(ツ)_/¯
+      // .attr("data-tooltip", (event, value) => this.graph.node(value).tooltip)
+      .on("click", (event, value) => {
+        this.send({event: "click", value});
       })
       .on("mouseover", () => tooltip.style("visibility", "visible"))
-      .on("mousemove", (v) => {
+      .on("mousemove", (event, value) => {
         tooltip
-          .text(this.graph.node(v).tooltip)
-          .style("top", `${d3.event.pageY - 10}px`)
-          .style("left", `${d3.event.pageX + 10}px`);
+          .text(this.graph.node(value).tooltip)
+          .style("top", `${event.pageY - 10}px`)
+          .style("left", `${event.pageX + 10}px`);
       })
       .on("mouseout", () => tooltip.style("visibility", "hidden"));
 
