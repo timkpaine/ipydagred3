@@ -35,7 +35,7 @@
     "clean": "npm-run-all clean:*",
     "clean:lib": "rimraf lib",
     "clean:labextension": "rimraf ../ipydagred3/labextension",
-    "clean:nbextension": "rimraf ../ipydagred3/nbextension/static/index*.js",
+    "clean:nbextension": "rimraf ../ipydagred3/nbextension/static/index.js ../ipydagred3/nbextension/static/index.js.map",
     "fix": "yarn lint --fix",
     "lint": "eslint -c .eslintrc.js --ext .js src/ tests/",
     "prepack": "npm run build",
