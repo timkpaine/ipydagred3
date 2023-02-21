@@ -23,8 +23,13 @@ prune js/yarn.lock
 # get rid of binder
 prune binder
 
-# Get rid of docs
+# get rid of docs
 prune docs
+
+# get rid of test and lint artifacts
+prune .pytest_cache
+prune .ruff_cache
+prune .mypy_cache
 
 # Patterns to exclude from any directory
 global-exclude *~

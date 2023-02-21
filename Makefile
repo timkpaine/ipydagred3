@@ -50,8 +50,14 @@ format: fix
 # Other Checks #
 #################
 check: checks
-checks:  ## run lint and other checks
+
+checks: check-manifest  ## run security, packaging, and other checks
+
+check-manifest:  ## run manifest checker for sdist
 	check-manifest -v
+
+semgrep:  ## run semgrep
+	semgrep ci --config auto
 
 ################
 # Distribution #
@@ -90,4 +96,4 @@ help:
 print-%:
 	@echo '$*=$($*)'
 
-.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix format checks check build develop install labextension dist publishpy publishjs publish docs clean
+.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix format checks check check-manifest semgrep build develop install labextension dist publishpy publishjs publish docs clean
