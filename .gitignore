@@ -40,10 +40,13 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+python_junit.xml
 nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.pytest_cache
+.ruff_cache
 
 # Translations
 *.mo
@@ -68,6 +71,8 @@ target/
 
 # IPython Notebook
 .ipynb_checkpoints
+*.ipynb
+.autoversion
 
 # pyenv
 .python-version
@@ -142,18 +147,13 @@ $RECYCLE.BIN/
 
 # NPM
 # ----
-
 **/node_modules/
-ipydagred3/nbextension/static/index.*
-ipydagred3/labextension/*.tgz
 
 # Coverage data
 # -------------
 **/coverage/
 
-# Packed lab extensions
+# Notebook and lab extensions
+ipydagred3/nbextension/static/index.*
+ipydagred3/labextension/*.tgz
 ipydagred3/labextension
-python_junit.xml
-
-*.ipynb
-.autoversion

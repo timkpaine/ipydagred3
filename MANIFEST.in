@@ -2,7 +2,7 @@ include LICENSE
 include README.md
 include CONTRIBUTING.md
 
-include setup.cfg
+include .bumpversion.cfg
 include pyproject.toml
 include Makefile
 
@@ -23,8 +23,13 @@ prune js/yarn.lock
 # get rid of binder
 prune binder
 
-# Get rid of docs
+# get rid of docs
 prune docs
+
+# get rid of test and lint artifacts
+prune .pytest_cache
+prune .ruff_cache
+prune .mypy_cache
 
 # Patterns to exclude from any directory
 global-exclude *~

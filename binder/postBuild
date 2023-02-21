@@ -7,4 +7,4 @@
 # jupyter labextension install $EXTENSIONS --no-build
 # jupyter lab build --dev-build=False --minimize=False
 
-jupyter serverextension enable --py jupyterlab
+jupyter server extension enable --py jupyterlab
