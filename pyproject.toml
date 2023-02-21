@@ -1,3 +1,123 @@
 [build-system]
-requires = ["setuptools", "wheel", "jupyter-packaging<2", "jupyterlab>=3"]
-build-backend = "jupyter_packaging.build_api"
+requires = [
+    "hatchling>=1.3.1",
+    "jupyterlab>=3.*,<4",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "ipydagred3"
+description = "ipywidgets wrapper around dagre-d3"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.7"
+authors = [
+    { name = "Tim Paine", email = "t.paine154@gmail.com" },
+]
+keywords = [
+    "Jupyter",
+    "JupyterLab",
+    "Widgets",
+    "IPython",
+    "Graph",
+    "Data",
+    "DAG",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Jupyter",
+    "Framework :: Jupyter :: JupyterLab",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "ipywidgets>=7.5.1",
+]
+version = "0.3.7"
+
+[project.optional-dependencies]
+develop = [
+    "black>=23",
+    "check-manifest",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "tbump",
+]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+[project.urls]
+Homepage = "https://github.com/timkpaine/ipydagred3"
+
+[tool.check-manifest]
+ignore = [
+	"ipydagred3/labextension/**",
+	"ipydagred3/nbextension/**",
+	"js/**"
+]
+
+[tool.hatch.build]
+artifacts = [
+    "ipydagred3/nbextension/static/index.*",
+    "ipydagred3/labextension"
+]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"ipydagred3/nbextension" = "share/jupyter/nbextensions/ipydagred3"
+"ipydagred3/labextension" = "share/jupyter/labextensions/ipydagred3"
+"ipydagred3/extension/install.json" = "share/jupyter/labextensions/ipydagred3/install.json"
+"ipydagred3/extension/ipydagred3.json" = "etc/jupyter/nbconfig/notebook.d/ipydagred3.json"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    ".github",
+    "binder",
+    "docs",
+]
+
+[tool.hatch.build.hooks.jupyter-builder]
+build-function = "hatch_jupyter_builder.npm_builder"
+ensured-targets = [
+    "ipydagred3/nbextension/static/index.js",
+    "ipydagred3/labextension/package.json",
+]
+skip-if-exists = [
+    "ipydagred3/nbextension/static/index.js",
+    "ipydagred3/labextension/package.json",
+]
+dependencies = [
+    "hatch-jupyter-builder>=0.5.0",
+]
+
+[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+path = "js"
+build_cmd = "build"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.tbump]
+file = [
+    { src = "pyproject.toml", version_template = "version = \"{major}.{minor}.{patch}\"" },
+    { src = "ipydagred3/_version.py", version_template = "version = \"{major}.{minor}.{patch}\"" },
+    { src = "js/package.json", version_template = "\"version\": \"{major}.{minor}.{patch}\"" },
+]
+
+[tool.tbump.version]
+current = "0.3.7"
+regex = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)((?P<channel>a|b|rc|.dev)(?P<release>\\d+))?"
+
+[tool.tbump.git]
+message_template = "Bump to {new_version}"
+tag_template = "v{new_version}"

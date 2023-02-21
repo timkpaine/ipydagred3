@@ -1,33 +1,6 @@
-testpy: ## Clean and Make unit tests
-	python -m pytest -v ipydagred3/tests --cov=ipydagred3 --junitxml=python_junit.xml --cov-report=xml --cov-branch
-
-testjs: ## Clean and Make js tests
-	cd js; yarn test
-
-test: tests
-tests: testpy testjs ## run the tests
-
-lintpy:  ## Black/flake8 python
-	python -m black --check ipydagred3 setup.py
-	python -m flake8 ipydagred3 setup.py
-
-lintjs:  ## ESlint javascript
-	cd js; yarn lint
-
-lint: lintpy lintjs  ## run linter
-
-fixpy:  ## Black python
-	python -m black ipydagred3/ setup.py
-
-fixjs:  ## ESlint Autofix JS
-	cd js; yarn fix
-
-fix: fixpy fixjs  ## run black/tslint fix
-
-check: checks
-checks:  ## run lint and other checks
-	check-manifest -v
-
+###############
+# Build Tools #
+###############
 build:  ## build python/javascript
 	python -m build .
 
@@ -39,6 +12,50 @@ develop:  ## install to site-packages in editable mode
 install:  ## install to site-packages
 	python -m pip install .
 
+###########
+# Testing #
+###########
+testpy: ## Clean and Make unit tests
+	python -m pytest -v ipydagred3/tests --junitxml=python_junit.xml --cov=ipydagred3 --cov-report=xml:.coverage.xml --cov-branch --cov-fail-under=20 --cov-report term-missing
+
+testjs: ## Clean and Make js tests
+	cd js; yarn test
+
+test: tests
+tests: testpy testjs ## run the tests
+
+###########
+# Linting #
+###########
+lintpy:  ## Black/flake8 python
+	python -m ruff ipydagred3 setup.py
+	python -m black --check ipydagred3 setup.py
+
+lintjs:  ## ESlint javascript
+	cd js; yarn lint
+
+lint: lintpy lintjs  ## run linter
+
+fixpy:  ## Black python
+	python -m ruff ipydagred3 setup.py --fix
+	python -m black ipydagred3/ setup.py
+
+fixjs:  ## ESlint Autofix JS
+	cd js; yarn fix
+
+fix: fixpy fixjs  ## run black/tslint fix
+format: fix
+
+#################
+# Other Checks #
+#################
+check: checks
+checks:  ## run lint and other checks
+	check-manifest -v
+
+################
+# Distribution #
+################
 dist: clean build  ## create dists
 	python -m twine check dist/*
 
@@ -50,10 +67,9 @@ publishjs:  ## dist to npm
 
 publish: dist publishpy publishjs  ## dist to pypi and npm
 
-docs:  ## make documentation
-	make -C ./docs html
-	open ./docs/_build/html/index.html
-
+############
+# Cleaning #
+############
 clean: ## clean the repository
 	find . -name "__pycache__" | xargs  rm -rf
 	find . -name "*.pyc" | xargs rm -rf
@@ -61,9 +77,11 @@ clean: ## clean the repository
 	rm -rf .coverage coverage *.xml build dist *.egg-info lib node_modules .pytest_cache *.egg-info
 	rm -rf ipydagred3/labextension ipydagred3/nbextension/static/index*
 	cd js && yarn clean
-	# make -C ./docs clean
 	git clean -fd
 
+###########
+# Helpers #
+###########
 # Thanks to Francoise at marmelab.com for this
 .DEFAULT_GOAL := help
 help:
@@ -72,4 +90,4 @@ help:
 print-%:
 	@echo '$*=$($*)'
 
-.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix checks check build develop install labextension dist publishpy publishjs publish docs clean
+.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix format checks check build develop install labextension dist publishpy publishjs publish docs clean
