@@ -106,18 +106,3 @@ line-length = 120
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
-
-[tool.tbump]
-file = [
-    { src = "pyproject.toml", version_template = "version = \"{major}.{minor}.{patch}\"" },
-    { src = "ipydagred3/_version.py", version_template = "version = \"{major}.{minor}.{patch}\"" },
-    { src = "js/package.json", version_template = "\"version\": \"{major}.{minor}.{patch}\"" },
-]
-
-[tool.tbump.version]
-current = "0.3.7"
-regex = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)((?P<channel>a|b|rc|.dev)(?P<release>\\d+))?"
-
-[tool.tbump.git]
-message_template = "Bump to {new_version}"
-tag_template = "v{new_version}"
