@@ -100,6 +100,7 @@ dependencies = [
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 path = "js"
 build_cmd = "build"
+npm = ["yarn", "jlpm"]
 
 [tool.ruff]
 line-length = 120
