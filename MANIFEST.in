@@ -2,7 +2,7 @@ include LICENSE
 include README.md
 include CONTRIBUTING.md
 
-include setup.cfg
+include .bumpversion.cfg
 include pyproject.toml
 include Makefile
 

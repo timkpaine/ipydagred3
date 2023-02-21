@@ -1,4 +1,4 @@
-ipydagred3>=0.2.5
+ipydagred3==0.3.7
 ipywidgets>=7.5.1
 jupyterlab>=3.5
 requests>=2.24.0
