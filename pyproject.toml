@@ -54,7 +54,7 @@ test = [
 ]
 
 [project.urls]
-repository = "{{cookiecutter.url}}"
+repository = "https://github.com/timkpaine/ipydagred3"
 homepage = "https://github.com/timkpaine/ipydagred3"
 
 [tool.check-manifest]
