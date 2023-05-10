@@ -41,13 +41,25 @@ class DagreD3Widget(DOMWidget):
         if content.get("event", "") == "click":
             self.click(content.get("value", ""))
 
+    @wraps(Graph.addGraph)
+    def addGraph(self, *args, **kwargs):
+        self.graph.addGraph(*args, **kwargs)
+
     @wraps(Graph.setGraph)
     def setGraph(self, *args, **kwargs):
         self.graph.setGraph(*args, **kwargs)
 
+    @wraps(Graph.addNode)
+    def addNode(self, *args, **kwargs):
+        self.graph.addNode(*args, **kwargs)
+
     @wraps(Graph.setNode)
     def setNode(self, *args, **kwargs):
         self.graph.setNode(*args, **kwargs)
+
+    @wraps(Graph.addEdge)
+    def addEdge(self, *args, **kwargs):
+        self.graph.addEdge(*args, **kwargs)
 
     @wraps(Graph.setEdge)
     def setEdge(self, *args, **kwargs):
