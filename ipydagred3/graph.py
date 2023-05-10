@@ -28,6 +28,9 @@ class Graph(HasTraits):
     def isMultiGraph(self):
         return self.multigraph
 
+    def addGraph(self, config):
+        self.setGraph(config)
+
     def setGraph(self, config):
         config = config or {}
         self.directed = config.get("directed", self.directed)
@@ -58,30 +61,37 @@ class Graph(HasTraits):
     # outEdges(outNodeName: string, inNodeName?: string): Edge[]|undefined;
     # removeEdge(outNodeName: string, inNodeName: string): Graph;
     # setDefaultEdgeLabel(callback: string|((v: string, w: string, name?: string) => string|Label)): Graph;
+    def addEdge(self, edge_or_node1, node2=None, label="", **attrs):
+        self.setEdge(edge_or_node1, node2, label, **attrs)
+
     def setEdge(self, edge_or_node1, node2=None, label="", **attrs):
         if isinstance(edge_or_node1, Edge):
             if edge_or_node1.v not in self.nodes:
                 self.setNode(edge_or_node1.v)
             if edge_or_node1.w not in self.nodes:
                 self.setNode(edge_or_node1.w)
-            self.edges.append(edge_or_node1)
-            edge_or_node1["label"] = label or edge_or_node1.label
-            edge_or_node1["tooltip"] = attrs.pop("tooltip", edge_or_node1.tooltip)
-            edge_or_node1["labelpos"] = attrs.pop("labelpos", edge_or_node1.labelpos)
-            edge_or_node1["labeloffset"] = attrs.pop(
+            edge_or_node1.label = label or edge_or_node1.label
+            edge_or_node1.tooltip = attrs.pop("tooltip", edge_or_node1.tooltip)
+            edge_or_node1.labelpos = attrs.pop("labelpos", edge_or_node1.labelpos)
+            edge_or_node1.labeloffset = attrs.pop(
                 "labeloffset", edge_or_node1.labeloffset
             )
-            edge_or_node1["attrs"].update(attrs)
-            return edge_or_node1
-        if isinstance(edge_or_node1, Node):
-            node1 = edge_or_node1
-        else:
-            # create and add node
-            node1 = self.setNode(edge_or_node1)
-        if not isinstance(node2, Node):
-            node2 = self.setNode(node2)
+            edge_or_node1.attrs.update(attrs)
 
-        edge = Edge(node1, node2, label=label, **attrs)
+            # set edge var
+            edge = edge_or_node1
+        else:
+            if isinstance(edge_or_node1, Node):
+                node1 = edge_or_node1
+            else:
+                # create and add node
+                node1 = self.setNode(edge_or_node1)
+
+            if not isinstance(node2, Node):
+                node2 = self.setNode(node2)
+
+            edge = Edge(node1, node2, label=label, **attrs)
+
         edge._setGraph(self)
         self.edges.append(edge)
         self.post({"type": "setEdge", "source": edge.to_dict()})
@@ -104,6 +114,9 @@ class Graph(HasTraits):
     # predecessors(name: string): Node[]|undefined;
     # removeNode(name: string): Graph;
     # setDefaultNodeLabel(callback: string|((nodeId: string) => string|Label)): Graph;
+
+    def addNode(self, node, **attrs):
+        self.setNode(node, **attrs)
 
     def setNode(self, node, **attrs):
         if not isinstance(node, Node):

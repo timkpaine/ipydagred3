@@ -1,12 +1,15 @@
 div.dagred3 {
-  min-height: 600px;
-  min-width: 800px;
-  /* resize: both; */
+  min-height: 400px;
+  display: flex;
+  resize: both;
+  z-index: 2;
 }
 
-div.dagred3 svg {
-  height: 600px;
-  width: 800px;
+div.dagred3 > svg {
+  width: 100%;
+  padding-right: 5px;
+  display: block;
+  z-index: 1;
 }
 
 .dagred3 .node rect,

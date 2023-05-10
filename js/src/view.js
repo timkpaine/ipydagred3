@@ -2,6 +2,7 @@
 import {DOMWidgetView} from "@jupyter-widgets/base";
 import {graphlib, render} from "dagre-d3-es";
 import * as d3 from "d3";
+import throttle from "lodash/throttle";
 
 // Import the CSS
 import "../style/index.css";
@@ -17,7 +18,7 @@ export class DagreD3View extends DOMWidgetView {
 
   renderer;
 
-  throttle;
+  throttled_render;
 
   queued;
 
@@ -37,16 +38,32 @@ export class DagreD3View extends DOMWidgetView {
 
     const el = d3.select(this.el);
     this.svg = el.append("svg");
-    this.svg.attr("height", "600");
-    this.svg.attr("width", "800");
 
     this.inner = this.svg.append("g");
-    this.inner.attr("height", "600");
-    this.inner.attr("width", "800");
-    this.graph = new graphlib.Graph().setGraph({height: 400, width: 400});
+    this.graph = new graphlib.Graph();
+    this.graph = new graphlib.Graph({directed: this.model.get("_graph").directed});
+    this.graph.setGraph({
+      nodesep: 70,
+      ranksep: 50,
+      marginx: 20,
+      marginy: 20,
+      rankdir: this.model.get("_graph").attrs.rankdir || "TB",
+    });
+
+    // set height and width
+    const model_height = this.model.get("_graph").attrs.height;
+    const model_width = this.model.get("_graph").attrs.width;
+    if (model_height) {
+      this.svg.height = model_height;
+    }
+    if (model_width) {
+      this.svg.width = model_width;
+    }
 
     // eslint-disable-next-line new-cap
     this.renderer = new render();
+
+    this.throttled_render = throttle(() => this._render(), 5);
 
     this.displayed.then(() => {
       // Set up zoom support
@@ -57,24 +74,18 @@ export class DagreD3View extends DOMWidgetView {
 
       // Center the graph
       const initialScale = 0.75;
-      this.svg.call(zoom.transform, d3.zoomIdentity.translate((parseInt(this.svg.attr("width"), 10) - (this.graph.graph().width || 0) * initialScale) / 2, 20).scale(initialScale));
+      const width = this.el.offsetWidth;
+      const height = this.el.offsetHeight;
+      this.svg.call(
+        zoom.transform,
+        d3.zoomIdentity.translate((width - (this.graph.graph().width || 0) * initialScale) / 2, (height - (this.graph.graph().height || 0) * initialScale) / 2).scale(initialScale)
+      );
 
-      this.svg.attr("height", (this.graph.graph().height || 0) * initialScale + 40);
       this.graph_changed();
     });
   }
 
   _render() {
-    if (this.throttle) {
-      // do not schedule a render
-      // eslint-disable-next-line no-console
-      console.log("[ipydagred3] throttling...");
-      this.queued = true;
-      return;
-    }
-
-    this.throttle = 1; // set guard
-
     this.renderer(this.inner, this.graph);
 
     const tooltip = d3.select("#dagred3tooltip");
@@ -93,20 +104,6 @@ export class DagreD3View extends DOMWidgetView {
           .style("left", `${event.pageX + 10}px`);
       })
       .on("mouseout", () => tooltip.style("visibility", "hidden"));
-
-    // any queued will now have been rendered
-    this.queued = false;
-
-    // remove guard after timeout, rerender if any queue
-    this.throttle = setTimeout(() => {
-      // since this sets throttle, if any render
-      // requests come in during the 200ms cooldown,
-      // they'll set queued and a rerender will be triggered
-      this.throttle = undefined;
-      if (this.queued) {
-        this._render();
-      }
-    }, 200);
   }
 
   _handle_message(msg) {
@@ -123,7 +120,7 @@ export class DagreD3View extends DOMWidgetView {
     } else if (msg.type === "edge") {
       this.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
     }
-    this._render();
+    this.throttled_render();
   }
 
   setNode(name, attrs) {
@@ -172,6 +169,6 @@ export class DagreD3View extends DOMWidgetView {
     graph.edges.forEach((e) => {
       this.setEdge(e.v.name, e.w.name, e.attrs);
     });
-    this._render();
+    this.throttled_render();
   }
 }
