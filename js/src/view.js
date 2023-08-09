@@ -78,7 +78,7 @@ export class DagreD3View extends DOMWidgetView {
       const height = this.el.offsetHeight;
       this.svg.call(
         zoom.transform,
-        d3.zoomIdentity.translate((width - (this.graph.graph().width || 0) * initialScale) / 2, (height - (this.graph.graph().height || 0) * initialScale) / 2).scale(initialScale)
+        d3.zoomIdentity.translate((width - (this.graph.graph().width || 0) * initialScale) / 2, (height - (this.graph.graph().height || 0) * initialScale) / 2).scale(initialScale),
       );
 
       this.graph_changed();
