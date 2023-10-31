@@ -23,9 +23,7 @@ class Edge(HasTraits):
 
     _graph = None
 
-    def __init__(
-        self, v, w, label="", labelpos="r", labeloffset=0.0, tooltip="", **attrs
-    ):
+    def __init__(self, v, w, label="", labelpos="r", labeloffset=0.0, tooltip="", **attrs):
         super(Edge, self).__init__(
             v=v,
             w=w,

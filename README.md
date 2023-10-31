@@ -1,7 +1,7 @@
 
 # ipydagred3
 
-ipywidgets library for drawing directed acyclic graphs in jupyterlab using [dagre-d3](https://github.com/dagrejs/dagre-d3)
+ipywidgets library for drawing directed acyclic graphs in jupyterlab using [dagre-d3](https://github.com/tbo47/dagre-es)
 
 [![Build Status](https://github.com/timkpaine/ipydagred3/workflows/Build%20Status/badge.svg?branch=main)](https://github.com/timkpaine/ipydagred3/actions?query=workflow%3A%22Build+Status%22)
 [![codecov](https://codecov.io/gh/timkpaine/ipydagred3/branch/main/graph/badge.svg?token=3N6NOPL4RE)](https://codecov.io/gh/timkpaine/ipydagred3)

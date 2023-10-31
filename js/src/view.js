@@ -40,14 +40,13 @@ export class DagreD3View extends DOMWidgetView {
     this.svg = el.append("svg");
 
     this.inner = this.svg.append("g");
-    this.graph = new graphlib.Graph();
     this.graph = new graphlib.Graph({directed: this.model.get("_graph").directed});
     this.graph.setGraph({
-      nodesep: 70,
-      ranksep: 50,
-      marginx: 20,
-      marginy: 20,
+      nodesep: this.model.get("_graph").attrs.nodesep || 70,
+      ranksep: this.model.get("_graph").attrs.ranksep || 50,
       rankdir: this.model.get("_graph").attrs.rankdir || "TB",
+      marginx: this.model.get("_graph").attrs.marginx || 20,
+      marginy: this.model.get("_graph").attrs.marginy || 20,
     });
 
     // set height and width
@@ -112,7 +111,7 @@ export class DagreD3View extends DOMWidgetView {
     } else if (msg.type === "setEdge") {
       this.setEdge(msg.source.v.name, msg.source.w.name, msg.source.attrs);
     } else if (msg.type === "graph") {
-      const ob = {};
+      const ob = this.graph.graph();
       ob[msg.attr] = msg.value;
       this.graph.setGraph(ob);
     } else if (msg.type === "node") {
@@ -159,8 +158,8 @@ export class DagreD3View extends DOMWidgetView {
       compound: graph.compound,
       directed: graph.directed,
       multigraph: graph.multigraph,
+      ...this.graph.graph(),
     };
-
     this.graph.setGraph(ob);
 
     graph.nodes.forEach((n) => {

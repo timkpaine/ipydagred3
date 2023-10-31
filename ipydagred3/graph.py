@@ -48,13 +48,7 @@ class Graph(HasTraits):
             if isinstance(edge[0], Node):
                 return any((e for e in self.edges if e.v == edge[0] and e.w == edge[1]))
             else:
-                return any(
-                    (
-                        e
-                        for e in self.edges
-                        if e.v.name == edge[0] and e.w.name == edge[1]
-                    )
-                )
+                return any((e for e in self.edges if e.v.name == edge[0] and e.w.name == edge[1]))
         return edge in (e.label for e in self.edges)
 
     # inEdges(inNodeName: string, outNodeName?: string): Edge[]|undefined;
@@ -73,9 +67,7 @@ class Graph(HasTraits):
             edge_or_node1.label = label or edge_or_node1.label
             edge_or_node1.tooltip = attrs.pop("tooltip", edge_or_node1.tooltip)
             edge_or_node1.labelpos = attrs.pop("labelpos", edge_or_node1.labelpos)
-            edge_or_node1.labeloffset = attrs.pop(
-                "labeloffset", edge_or_node1.labeloffset
-            )
+            edge_or_node1.labeloffset = attrs.pop("labeloffset", edge_or_node1.labeloffset)
             edge_or_node1.attrs.update(attrs)
 
             # set edge var
