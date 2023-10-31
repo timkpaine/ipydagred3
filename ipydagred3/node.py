@@ -51,11 +51,7 @@ class Node(HasTraits):
     @validate("shape")
     def _validate_shape(self, proposal):
         if proposal.value not in ("rect", "circle", "ellipse", "diamond"):
-            raise TraitError(
-                'Shape must be in ("rect", "circle", "ellipse", "diamond"), got: {}'.format(
-                    proposal
-                )
-            )
+            raise TraitError('Shape must be in ("rect", "circle", "ellipse", "diamond"), got: {}'.format(proposal))
         return proposal.value
 
     def to_dict(self):

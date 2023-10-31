@@ -45,7 +45,6 @@ dependencies = [
 
 [project.optional-dependencies]
 develop = [
-    "black>=23",
     "check-manifest",
     "ruff",
     "pytest",
