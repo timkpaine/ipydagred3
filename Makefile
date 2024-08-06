@@ -28,7 +28,8 @@ tests: testpy testjs ## run the tests
 # Linting #
 ###########
 lintpy:  ## Black/flake8 python
-	python -m ruff ipydagred3 setup.py
+	python -m ruff format --check ipydagred3 setup.py
+	python -m ruff check ipydagred3 setup.py
 
 lintjs:  ## ESlint javascript
 	cd js; yarn lint
@@ -36,6 +37,7 @@ lintjs:  ## ESlint javascript
 lint: lintpy lintjs  ## run linter
 
 fixpy:  ## Black python
+	python -m ruff check --fix ipydagred3 setup.py
 	python -m ruff format ipydagred3 setup.py
 
 fixjs:  ## ESlint Autofix JS
