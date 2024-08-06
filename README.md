@@ -38,4 +38,4 @@ Network example from the first gif
 [Network Example](https://github.com/timkpaine/ipydagred3/tree/main/docs/examples/example.ipynb)
 
 Tooltip Example from the second gif
-[Tooltip Example](https://github.com/timkpaine/ipydagred3/tree/main/docs/examples/example.ipynb)
+[Tooltip Example](https://github.com/timkpaine/ipydagred3/tree/main/docs/examples/tooltip.ipynb)
