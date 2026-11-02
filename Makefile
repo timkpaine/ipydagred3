@@ -1,99 +1,72 @@
-###############
-# Build Tools #
-###############
-build:  ## build python/javascript
-	python -m build .
+.PHONY: develop requirements build install lint lint-py lint-docs fix fix-py fix-docs format checks check check-dist check-types test tests coverage dist dist-build dist-check show-version patch minor major clean help
 
-develop:  ## install to site-packages in editable mode
-	python -m pip install --upgrade build pip setuptools twine wheel
-	cd js; yarn
-	python -m pip install -e .[develop]
+develop:  ## install the library and development dependencies
+	uv pip install -e '.[develop]'
 
-install:  ## install to site-packages
-	python -m pip install .
+requirements:  ## install development requirements
+	uv pip install -r pyproject.toml --extra develop
 
-###########
-# Testing #
-###########
-testpy: ## Clean and Make unit tests
-	python -m pytest -v ipydagred3/tests --junitxml=junit.xml --cov=ipydagred3 --cov-report=xml:.coverage.xml --cov-branch --cov-fail-under=20 --cov-report term-missing
+build:  ## build Python distributions
+	python -m build -n
 
-testjs: ## Clean and Make js tests
-	cd js; yarn test
+install:  ## install the library
+	uv pip install .
 
-test: tests
-tests: testpy testjs ## run the tests
+lint-py:  ## lint Python
+	python -m ruff check ipydagred3
+	python -m ruff format --check ipydagred3
 
-###########
-# Linting #
-###########
-lintpy:  ## Black/flake8 python
-	python -m ruff format --check ipydagred3 setup.py
-	python -m ruff check ipydagred3 setup.py
+lint-docs:  ## lint documentation
+	python -m mdformat --check README.md CONTRIBUTING.md docs/compatibility.md
+	python -m codespell_lib README.md CONTRIBUTING.md docs/compatibility.md
 
-lintjs:  ## ESlint javascript
-	cd js; yarn lint
+lint: lint-py lint-docs  ## run linters
+lints: lint
 
-lint: lintpy lintjs  ## run linter
+fix-py:  ## format Python
+	python -m ruff check --fix ipydagred3
+	python -m ruff format ipydagred3
 
-fixpy:  ## Black python
-	python -m ruff check --fix ipydagred3 setup.py
-	python -m ruff format ipydagred3 setup.py
+fix-docs:  ## format documentation
+	python -m mdformat README.md CONTRIBUTING.md docs/compatibility.md
 
-fixjs:  ## ESlint Autofix JS
-	cd js; yarn fix
-
-fix: fixpy fixjs  ## run black/tslint fix
+fix: fix-py fix-docs  ## run formatters
 format: fix
 
-#################
-# Other Checks #
-#################
+check-dist:  ## validate Python distribution contents
+	check-dist -v
+
+check-types:  ## check Python types
+	python -m ty check
+
+checks: check-dist check-types  ## run package and type checks
 check: checks
 
-checks: check-manifest  ## run security, packaging, and other checks
+test:  ## run Python tests
+	python -m pytest ipydagred3/tests
 
-check-manifest:  ## run manifest checker for sdist
-	check-manifest -v
+tests: test
 
-semgrep:  ## run semgrep
-	semgrep ci --config auto
+coverage:  ## run tests with coverage
+	python -m pytest ipydagred3/tests --cov=ipydagred3 --cov-report=term-missing --cov-report=xml
 
-################
-# Distribution #
-################
-dist: clean build  ## create dists
+dist-build:  ## build wheel and source distribution
+	python -m build -w -s
+
+dist-check:  ## check distribution metadata
 	python -m twine check dist/*
 
-publishpy:  ## dist to pypi
-	python -m twine upload dist/* --skip-existing
+dist: dist-build dist-check  ## build and validate distributions
 
-publishjs:  ## dist to npm
-	cd js; npm publish || echo "can't publish - might already exist"
+show-version:  ## show current version
+	bump-my-version show current_version
 
-publish: dist publishpy publishjs  ## dist to pypi and npm
+patch minor major:  ## bump version
+	bump-my-version bump $@
 
-############
-# Cleaning #
-############
-clean: ## clean the repository
-	find . -name "__pycache__" | xargs  rm -rf
-	find . -name "*.pyc" | xargs rm -rf
-	find . -name ".ipynb_checkpoints" | xargs  rm -rf
-	rm -rf .coverage coverage *.xml build dist *.egg-info lib node_modules .pytest_cache *.egg-info
-	rm -rf ipydagred3/labextension ipydagred3/nbextension/static/index*
-	cd js && yarn clean
-	git clean -fd
+clean:  ## remove generated build and test artifacts
+	rm -rf build dist .coverage coverage.xml junit.xml .pytest_cache .ruff_cache
 
-###########
-# Helpers #
-###########
-# Thanks to Francoise at marmelab.com for this
 .DEFAULT_GOAL := help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
-print-%:
-	@echo '$*=$($*)'
-
-.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix format checks check check-manifest semgrep build develop install labextension dist publishpy publishjs publish docs clean

@@ -1,14 +1,15 @@
-from .node import Node
 from traitlets import (
+    Dict,
+    Float,
     HasTraits,
+    Instance,
     TraitError,
+    Unicode,
     observe,
     validate,
-    Unicode,
-    Instance,
-    Float,
-    Dict,
 )
+
+from .node import Node
 
 
 class Edge(HasTraits):
@@ -24,13 +25,13 @@ class Edge(HasTraits):
     _graph = None
 
     def __init__(self, v, w, label="", labelpos="r", labeloffset=0.0, tooltip="", **attrs):
-        super(Edge, self).__init__(
+        super().__init__(
             v=v,
             w=w,
             label=label,
             labelpos=labelpos,
             labeloffset=labeloffset,
-            tooltip=tooltip or label or "{}->{}".format(v, w),
+            tooltip=tooltip or label or f"{v}->{w}",
             attrs=attrs or {},
         )
 
@@ -80,7 +81,7 @@ class Edge(HasTraits):
         ret = {}
         ret["v"] = self.v.to_dict()
         ret["w"] = self.w.to_dict()
-        ret["attrs"] = self.attrs
+        ret["attrs"] = dict(self.attrs)
         ret["attrs"]["label"] = self.label
         ret["attrs"]["labelpos"] = self.labelpos
         ret["attrs"]["labeloffset"] = self.labeloffset

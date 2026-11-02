@@ -27,16 +27,19 @@ the rejection).
 If you want to help resolve an issue by making some changes that are larger than that covered by the above paragraph, it is recommended that you:
 
 - Fork the repository on Github
+
 - Clone your fork to your computer
+
 - Run the following commands inside the cloned repository:
-  - `pip install -e .[dev]` - This will install the Python package in development
-    mode.
-  - `jupyter labextension install js` - This will add the lab extension in development
+
+  - `pip install -e '.[develop]'` - This will install the Python package in development
     mode.
 
 - Validate the install by running the tests:
-  - `py.test` - This command will run the Python tests.
-  - `yarn test` - This command will run the JS tests.
+
+  - `make test` - Run the Python tests.
+  - `make lint` - Run Python and documentation checks.
+  - `make build` and `make checks` - Build and validate Python distributions.
 
 Once you have such a development setup, you should:
 
