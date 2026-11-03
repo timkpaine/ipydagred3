@@ -1,93 +1,123 @@
-###############
-# Build Tools #
-###############
-build:  ## build python/javascript
-	python -m build .
+#########
+# BUILD #
+#########
+.PHONY: develop build install
 
-develop:  ## install to site-packages in editable mode
-	python -m pip install --upgrade build pip setuptools twine wheel
-	cd js; yarn
-	python -m pip install -e .[develop]
+develop:  ## install dependencies and build library
+	uv pip install -e .[develop]
 
-install:  ## install to site-packages
-	python -m pip install .
+requirements:  ## install prerequisite python build requirements
+	uv pip install -r pyproject.toml --extra develop
 
-###########
-# Testing #
-###########
-testpy: ## Clean and Make unit tests
-	python -m pytest -v ipydagred3/tests --junitxml=junit.xml --cov=ipydagred3 --cov-report=xml:.coverage.xml --cov-branch --cov-fail-under=20 --cov-report term-missing
+build:  ## build the python library
+	python -m build -n
 
-testjs: ## Clean and Make js tests
-	cd js; yarn test
+install:  ## install library
+	uv pip install .
 
-test: tests
-tests: testpy testjs ## run the tests
+#########
+# LINTS #
+#########
+.PHONY: lint-py lint-docs fix-py fix-docs lint lints fix format
 
-###########
-# Linting #
-###########
-lintpy:  ## Black/flake8 python
-	python -m ruff format --check ipydagred3 setup.py
-	python -m ruff check ipydagred3 setup.py
+lint-py:  ## lint python with ruff
+	python -m ruff check ipydagred3
+	python -m ruff format --check ipydagred3
 
-lintjs:  ## ESlint javascript
-	cd js; yarn lint
+lint-docs:  ## lint docs with mdformat and codespell
+	python -m mdformat --check README.md CONTRIBUTING.md docs/compatibility.md
+	python -m codespell_lib README.md CONTRIBUTING.md docs/compatibility.md
 
-lint: lintpy lintjs  ## run linter
+fix-py:  ## autoformat python code with ruff
+	python -m ruff check --fix ipydagred3
+	python -m ruff format ipydagred3
 
-fixpy:  ## Black python
-	python -m ruff check --fix ipydagred3 setup.py
-	python -m ruff format ipydagred3 setup.py
+fix-docs:  ## autoformat docs with mdformat and codespell
+	python -m mdformat README.md CONTRIBUTING.md docs/compatibility.md
+	python -m codespell_lib --write README.md CONTRIBUTING.md docs/compatibility.md
 
-fixjs:  ## ESlint Autofix JS
-	cd js; yarn fix
-
-fix: fixpy fixjs  ## run black/tslint fix
+lint: lint-py lint-docs  ## run all linters
+lints: lint
+fix: fix-py fix-docs  ## run all autoformatters
 format: fix
 
-#################
+################
 # Other Checks #
-#################
+################
+.PHONY: check-dist check-types checks check
+
+check-dist:  ## check python sdist and wheel with check-dist
+	check-dist -v
+
+check-types:  ## check python types with ty
+	python -m ty check
+
+checks: check-dist check-types
+
+# Alias
 check: checks
 
-checks: check-manifest  ## run security, packaging, and other checks
+#########
+# TESTS #
+#########
+.PHONY: test coverage tests
 
-check-manifest:  ## run manifest checker for sdist
-	check-manifest -v
+test:  ## run python tests
+	python -m pytest -v ipydagred3/tests
 
-semgrep:  ## run semgrep
-	semgrep ci --config auto
+coverage:  ## run tests and collect test coverage
+	python -m pytest -v ipydagred3/tests --cov=ipydagred3 --cov-report term-missing --cov-report xml
 
-################
-# Distribution #
-################
-dist: clean build  ## create dists
+# Alias
+tests: test
+
+###########
+# VERSION #
+###########
+.PHONY: show-version patch minor major
+
+show-version:  ## show current library version
+	@bump-my-version show current_version
+
+patch:  ## bump a patch version
+	@bump-my-version bump patch
+
+minor:  ## bump a minor version
+	@bump-my-version bump minor
+
+major:  ## bump a major version
+	@bump-my-version bump major
+
+########
+# DIST #
+########
+.PHONY: dist dist-build dist-sdist dist-local-wheel publish
+
+dist-build:  # build python dists
+	python -m build -w -s
+
+dist-check:  ## run python dist checker with twine
 	python -m twine check dist/*
 
-publishpy:  ## dist to pypi
-	python -m twine upload dist/* --skip-existing
+dist: clean dist-build dist-check  ## build all dists
 
-publishjs:  ## dist to npm
-	cd js; npm publish || echo "can't publish - might already exist"
+publish: dist  ## publish python assets
 
-publish: dist publishpy publishjs  ## dist to pypi and npm
+#########
+# CLEAN #
+#########
+.PHONY: deep-clean clean
 
-############
-# Cleaning #
-############
+deep-clean: ## clean everything from the repository
+	git clean -fdx
+
 clean: ## clean the repository
-	find . -name "__pycache__" | xargs  rm -rf
-	find . -name "*.pyc" | xargs rm -rf
-	find . -name ".ipynb_checkpoints" | xargs  rm -rf
-	rm -rf .coverage coverage *.xml build dist *.egg-info lib node_modules .pytest_cache *.egg-info
-	rm -rf ipydagred3/labextension ipydagred3/nbextension/static/index*
-	cd js && yarn clean
-	git clean -fd
+	rm -rf .coverage coverage cover htmlcov logs build dist *.egg-info
 
-###########
-# Helpers #
-###########
+############################################################################################
+
+.PHONY: help
+
 # Thanks to Francoise at marmelab.com for this
 .DEFAULT_GOAL := help
 help:
@@ -95,5 +125,3 @@ help:
 
 print-%:
 	@echo '$*=$($*)'
-
-.PHONY: testjs testpy tests test lintpy lintjs lint fixpy fixjs fix format checks check check-manifest semgrep build develop install labextension dist publishpy publishjs publish docs clean

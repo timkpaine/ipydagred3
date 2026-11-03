@@ -1,4 +1,5 @@
-from traitlets import HasTraits, observe, Bool, Instance, List, Dict
+from traitlets import Bool, Dict, HasTraits, Instance, List, observe
+
 from .edge import Edge
 from .node import Node
 
@@ -15,7 +16,7 @@ class Graph(HasTraits):
     _widget = None
 
     def __init__(self, directed=True, multigraph=False, compound=False, attrs=None):
-        super(Graph, self).__init__(
+        super().__init__(
             directed=directed,
             multigraph=multigraph,
             compound=compound,
@@ -46,9 +47,9 @@ class Graph(HasTraits):
             return edge in self.edges
         elif isinstance(edge, tuple):
             if isinstance(edge[0], Node):
-                return any((e for e in self.edges if e.v == edge[0] and e.w == edge[1]))
+                return any(e for e in self.edges if e.v == edge[0] and e.w == edge[1])
             else:
-                return any((e for e in self.edges if e.v.name == edge[0] and e.w.name == edge[1]))
+                return any(e for e in self.edges if e.v.name == edge[0] and e.w.name == edge[1])
         return edge in (e.label for e in self.edges)
 
     # inEdges(inNodeName: string, outNodeName?: string): Edge[]|undefined;
@@ -151,7 +152,6 @@ class Graph(HasTraits):
     def post(self, msg):
         if self._widget:
             self._widget.post(msg)
-        return
 
     def _notify_change(self, source, attr, value):
         if isinstance(source, Edge):
@@ -162,7 +162,7 @@ class Graph(HasTraits):
         elif source == self:
             self.post({"type": "graph", "source": self.to_dict()})
         else:
-            raise Exception("Unknown source: {}".format(source))
+            raise TypeError(f"Unknown source: {source}")
 
     @observe("directed")
     def _observe_directed(self, change):

@@ -1,4 +1,4 @@
-from traitlets import HasTraits, validate, observe, TraitError, Unicode, Dict
+from traitlets import Dict, HasTraits, TraitError, Unicode, observe, validate
 
 
 class Node(HasTraits):
@@ -11,8 +11,7 @@ class Node(HasTraits):
     _graph = None
 
     def __init__(self, name, label="", shape="rect", tooltip="", **attrs):
-        super(Node, self).__init__(
-            self,
+        super().__init__(
             name=name,
             label=label or name,
             shape=shape,
@@ -51,13 +50,13 @@ class Node(HasTraits):
     @validate("shape")
     def _validate_shape(self, proposal):
         if proposal.value not in ("rect", "circle", "ellipse", "diamond"):
-            raise TraitError('Shape must be in ("rect", "circle", "ellipse", "diamond"), got: {}'.format(proposal))
+            raise TraitError(f'Shape must be in ("rect", "circle", "ellipse", "diamond"), got: {proposal}')
         return proposal.value
 
     def to_dict(self):
         ret = {}
         ret["name"] = self.name
-        ret["attrs"] = self.attrs
+        ret["attrs"] = dict(self.attrs)
         ret["attrs"]["label"] = self.label
         ret["attrs"]["shape"] = self.shape
         ret["attrs"]["tooltip"] = self.tooltip or self.label

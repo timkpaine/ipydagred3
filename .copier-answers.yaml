@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier
+_commit: 5a2e0e6
+_src_path: https://github.com/python-project-templates/base.git
+add_docs: false
+add_extension: python
+add_wiki: false
+email: t.paine154@gmail.com
+github: timkpaine
+project_description: An AnyWidget graph widget powered by spaday-dagre
+project_name: ipydagred3
+python_version_primary: '3.11'
+team: Tim Paine
