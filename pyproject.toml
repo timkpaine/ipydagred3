@@ -1,20 +1,28 @@
 [build-system]
-requires = ["hatchling"]
+requires = [
+    "hatchling",
+]
 build-backend = "hatchling.build"
 
 [project]
 name = "ipydagred3"
+authors = [
+    {name = "Tim Paine", email = "t.paine154@gmail.com"},
+]
 description = "An AnyWidget graph widget powered by spaday-dagre"
-version = "0.4.1"
 readme = "README.md"
 license = { file = "LICENSE" }
+version = "0.4.1"
 requires-python = ">=3.11"
-authors = [{ name = "Tim Paine", email = "t.paine154@gmail.com" }]
 keywords = ["Jupyter", "JupyterLab", "Widgets", "IPython", "Graph", "DAG"]
+
 classifiers = [
     "Development Status :: 4 - Beta",
     "Framework :: Jupyter",
     "Framework :: Jupyter :: JupyterLab",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -22,6 +30,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: Apache Software License",
 ]
+
 dependencies = [
     "spaday[widget]>=0.13,<1.0",
     "spaday-dagre>=0.3,<1.0",
@@ -46,7 +55,10 @@ develop = [
     "uv",
     "wheel",
 ]
+
 test = ["pytest", "pytest-cov"]
+
+[project.scripts]
 
 [project.urls]
 Repository = "https://github.com/timkpaine/ipydagred3"
@@ -75,30 +87,68 @@ replace = 'ipydagred3=={new_version}'
 
 [tool.coverage.run]
 branch = true
-omit = ["ipydagred3/tests/*"]
+omit = [
+    "ipydagred3/tests/*",
+]
 
 [tool.coverage.report]
-exclude_also = ["raise NotImplementedError"]
+exclude_also = [
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "@(abc\\.)?abstractmethod",
+]
+ignore_errors = true
 fail_under = 50
 
+[tool.hatch.build]
+artifacts = []
+
+[tool.hatch.build.sources]
+src = "/"
+
 [tool.hatch.build.targets.sdist]
-packages = ["ipydagred3"]
+packages = [
+    "ipydagred3",
+]
 
 [tool.hatch.build.targets.wheel]
-packages = ["ipydagred3"]
+packages = [
+    "ipydagred3",
+]
+
+[tool.hatch.build.targets.wheel.shared-data]
 
 [tool.pytest.ini_options]
-addopts = ["-vvv", "--junitxml=junit.xml"]
-testpaths = ["ipydagred3/tests"]
+addopts = [
+    "-vvv",
+    "--junitxml=junit.xml",
+]
+testpaths = "ipydagred3/tests"
 
 [tool.ruff]
 line-length = 150
 
 [tool.ruff.lint]
-extend-select = ["I"]
+extend-select = [
+    "I",
+]
 
 [tool.ruff.lint.isort]
-known-first-party = ["ipydagred3"]
+combine-as-imports = true
+default-section = "third-party"
+known-first-party = [
+    "ipydagred3",
+]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
+"__init__.py" = [
+    "F401",
+    "F403",
+]

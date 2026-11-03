@@ -68,3 +68,7 @@ attributes and differences from dagre-d3.
 
 - [Network example](docs/examples/example.ipynb)
 - [Tooltips and click events](docs/examples/tooltip.ipynb)
+
+> [!NOTE]
+> Project scaffolding is maintained with [Copier](https://copier.readthedocs.io/en/stable/)
+> and the [Base Python Project Template](https://github.com/python-project-templates/base).
