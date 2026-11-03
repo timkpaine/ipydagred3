@@ -1,5 +1,5 @@
 ipydagred3==0.4.1
-ipywidgets>=8
-jupyterlab>=4,<5
-requests>=2.24.0
-tributary>=0.1.4
+ipywidgets>=8.1.9
+jupyterlab>=4.6.4,<5
+requests>=2.34.2
+tributary>=0.2.1

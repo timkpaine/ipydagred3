@@ -43,7 +43,7 @@ develop = [
     "check-dist",
     "codespell",
     "hatchling",
-    "jupyterlab>=4,<5",
+    "jupyterlab>=4.6.4,<5",
     "mdformat",
     "mdformat-frontmatter",
     "mdformat-tables>=1",
