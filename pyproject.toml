@@ -45,7 +45,7 @@ develop = [
     "hatchling",
     "jupyterlab>=4.6.4,<5",
     "mdformat",
-    "mdformat-frontmatter",
+    "mdformat-myst",
     "mdformat-tables>=1",
     "pytest",
     "pytest-cov",
