@@ -43,7 +43,8 @@ def main():
                 "metadata": {},
                 "outputs": [],
                 "source": [
-                    "%pip install -q ipydagred3\n",
+                    "import piplite\n",
+                    "await piplite.install('ipydagred3')\n",
                     "from importlib.metadata import version\n",
                     "print('ipydagred3', version('ipydagred3'))",
                 ],
