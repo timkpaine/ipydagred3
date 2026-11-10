@@ -5,19 +5,19 @@
         {
           "comment_text": "",
           "digests": {
-            "md5": "4966b79de40bacbed9ca7fa98bf60900",
-            "sha256": "b44396b43e1426ed939bb87ee55da99915678772568ce4f700d5a89e96ea9cf4"
+            "md5": "e5748d3c069c16bb08a51495503b2d2f",
+            "sha256": "d894a5b84c39f722b8cdd8632dc3a70ae74db3e22b0d51931a9718860117449c"
           },
           "downloads": -1,
           "filename": "ipydagred3-0.4.1-py3-none-any.whl",
           "has_sig": false,
-          "md5_digest": "4966b79de40bacbed9ca7fa98bf60900",
+          "md5_digest": "e5748d3c069c16bb08a51495503b2d2f",
           "packagetype": "bdist_wheel",
           "python_version": "py3",
           "requires_python": ">=3.11",
-          "size": 18990,
-          "upload_time": "2026-11-10T15:48:07.906716Z",
-          "upload_time_iso_8601": "2026-11-10T15:48:07.906716Z",
+          "size": 19086,
+          "upload_time": "2026-11-10T16:43:48.915949Z",
+          "upload_time_iso_8601": "2026-11-10T16:43:48.915949Z",
           "url": "./ipydagred3-0.4.1-py3-none-any.whl",
           "yanked": false,
           "yanked_reason": null
@@ -42,8 +42,8 @@
           "python_version": "py3",
           "requires_python": ">=3.10",
           "size": 2115391,
-          "upload_time": "2026-11-10T15:48:09.332742Z",
-          "upload_time_iso_8601": "2026-11-10T15:48:09.332742Z",
+          "upload_time": "2026-11-10T16:43:49.364912Z",
+          "upload_time_iso_8601": "2026-11-10T16:43:49.364912Z",
           "url": "./spaday-0.13.1-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
           "yanked": false,
           "yanked_reason": null
@@ -68,8 +68,8 @@
           "python_version": "py3",
           "requires_python": ">=3.11",
           "size": 138973,
-          "upload_time": "2026-11-10T15:48:09.333893Z",
-          "upload_time_iso_8601": "2026-11-10T15:48:09.333893Z",
+          "upload_time": "2026-11-10T16:43:49.365742Z",
+          "upload_time_iso_8601": "2026-11-10T16:43:49.365742Z",
           "url": "./spaday_dagre-0.3.0-py3-none-any.whl",
           "yanked": false,
           "yanked_reason": null
