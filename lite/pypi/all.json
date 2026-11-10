@@ -1,0 +1,80 @@
+{
+  "ipydagred3": {
+    "releases": {
+      "0.4.1": [
+        {
+          "comment_text": "",
+          "digests": {
+            "md5": "4966b79de40bacbed9ca7fa98bf60900",
+            "sha256": "b44396b43e1426ed939bb87ee55da99915678772568ce4f700d5a89e96ea9cf4"
+          },
+          "downloads": -1,
+          "filename": "ipydagred3-0.4.1-py3-none-any.whl",
+          "has_sig": false,
+          "md5_digest": "4966b79de40bacbed9ca7fa98bf60900",
+          "packagetype": "bdist_wheel",
+          "python_version": "py3",
+          "requires_python": ">=3.11",
+          "size": 18990,
+          "upload_time": "2026-11-10T15:48:07.906716Z",
+          "upload_time_iso_8601": "2026-11-10T15:48:07.906716Z",
+          "url": "./ipydagred3-0.4.1-py3-none-any.whl",
+          "yanked": false,
+          "yanked_reason": null
+        }
+      ]
+    }
+  },
+  "spaday": {
+    "releases": {
+      "0.13.1": [
+        {
+          "comment_text": "",
+          "digests": {
+            "md5": "54a76f88ef7dbd36ca12f42917e39f6f",
+            "sha256": "e393df4092d1e04be2ab90412d7997907b3a346de3ed22de652f18d59f390b6e"
+          },
+          "downloads": -1,
+          "filename": "spaday-0.13.1-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "has_sig": false,
+          "md5_digest": "54a76f88ef7dbd36ca12f42917e39f6f",
+          "packagetype": "bdist_wheel",
+          "python_version": "py3",
+          "requires_python": ">=3.10",
+          "size": 2115391,
+          "upload_time": "2026-11-10T15:48:09.332742Z",
+          "upload_time_iso_8601": "2026-11-10T15:48:09.332742Z",
+          "url": "./spaday-0.13.1-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "yanked": false,
+          "yanked_reason": null
+        }
+      ]
+    }
+  },
+  "spaday-dagre": {
+    "releases": {
+      "0.3.0": [
+        {
+          "comment_text": "",
+          "digests": {
+            "md5": "d3f6b883ffbbd86869f323bb0af7f711",
+            "sha256": "82be43ccac733cccc32d10dd7fa13c28a3c91842938c263458f5cba5757fb6b6"
+          },
+          "downloads": -1,
+          "filename": "spaday_dagre-0.3.0-py3-none-any.whl",
+          "has_sig": false,
+          "md5_digest": "d3f6b883ffbbd86869f323bb0af7f711",
+          "packagetype": "bdist_wheel",
+          "python_version": "py3",
+          "requires_python": ">=3.11",
+          "size": 138973,
+          "upload_time": "2026-11-10T15:48:09.333893Z",
+          "upload_time_iso_8601": "2026-11-10T15:48:09.333893Z",
+          "url": "./spaday_dagre-0.3.0-py3-none-any.whl",
+          "yanked": false,
+          "yanked_reason": null
+        }
+      ]
+    }
+  }
+}
