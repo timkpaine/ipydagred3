@@ -9,6 +9,25 @@ and [spaday-dagre](https://github.com/1kbgz/spaday-dagre).
 [![PyPI](https://img.shields.io/pypi/v/ipydagred3.svg)](https://pypi.python.org/pypi/ipydagred3)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/timkpaine/ipydagred3/main?urlpath=lab)
 
+## Try in your browser
+
+Open the [JupyterLite examples](https://timkpaine.github.io/ipydagred3/lite/lab/index.html).
+Choose a notebook and run every cell, starting with the install cell. Python runs in Pyodide;
+widgets and click callbacks run in your browser. The site uses the wheel built from this repository
+and downloads the Python runtime and remaining dependencies on first use.
+
+To build and check the site locally:
+
+```bash
+uv pip install -e '.[develop,lite]'
+make test-jupyterlite
+python -m http.server 8000 --directory dist
+```
+
+Open `http://localhost:8000/lite/lab/index.html`. Use `make jupyterlite` to build without running
+browser tests. Browser checks need Node.js and pnpm. The build stages copies of
+`docs/examples/*.ipynb` and clears saved outputs and widget state; the source notebooks are unchanged.
+
 ## Installation
 
 Install with Python 3.11 or later:
