@@ -11,22 +11,30 @@ and [spaday-dagre](https://github.com/1kbgz/spaday-dagre).
 
 ## Try in your browser
 
-Open the [JupyterLite examples](https://timkpaine.github.io/ipydagred3/lite/lab/index.html).
-Choose a notebook and run every cell, starting with the install cell. Python runs in Pyodide;
-widgets and click callbacks run in your browser. The site uses the wheel built from this repository
-and downloads the Python runtime and remaining dependencies on first use.
+Open [examples.ipynb](https://timkpaine.github.io/ipydagred3/lite/)
+in JupyterLite and choose **Run → Run All Cells**. The first cell installs `ipydagred3` from the site's build.
+Pyodide runs Python and widget callbacks in your browser. The first load downloads the Python runtime
+and dependencies.
 
-To build and check the site locally:
+The demo kernel uses an in-memory filesystem. Files uploaded through JupyterLite's file browser
+are not mounted in Python; the examples generate their data in code.
+
+To build and serve the site locally:
 
 ```bash
 uv pip install -e '.[develop,lite]'
-make test-jupyterlite
+make jupyterlite
 python -m http.server 8000 --directory dist
 ```
 
-Open `http://localhost:8000/lite/lab/index.html`. Use `make jupyterlite` to build without running
-browser tests. Browser checks need Node.js and pnpm. The build stages copies of
-`docs/examples/*.ipynb` and clears saved outputs and widget state; the source notebooks are unchanged.
+Open `http://localhost:8000/lite/`. To check the notebook in Chromium, Firefox, and WebKit, install
+Node.js and pnpm, then run `make test-jupyterlite`.
+
+The build copies `docs/examples/examples.ipynb` into the site, adds the install cell, and clears saved
+outputs and widget state.
+
+Configure GitHub Pages to serve the root of `gh-pages`. The publishing workflow updates that
+branch after a successful `main` build.
 
 ## Installation
 
@@ -53,7 +61,7 @@ widget = DagreD3Widget(graph)
 widget
 ```
 
-Edit existing objects or add graph elements from another cell to update the displayed graph:
+Update the displayed graph from another cell:
 
 ```python
 graph.setNode("start", style="fill: #7f7; stroke: #333")
@@ -61,7 +69,7 @@ graph.setNode("review", tooltip="Review the result")
 graph.setEdge("finish", "review", label="Review")
 ```
 
-Register a callback to inspect clicked nodes and edges:
+Handle node and edge clicks:
 
 ```python
 from IPython.display import display
@@ -79,14 +87,14 @@ widget.on_click(clicked)
 display(output)
 ```
 
-The widget supports zoom and pan, rectangular, circular, elliptical, and diamond nodes, custom
-tooltips, and node/edge CSS. See [compatibility reference](docs/compatibility.md) for the supported
+Nodes can be rectangles, circles, ellipses, or diamonds. The graph supports pan, zoom, custom
+tooltips, and CSS for nodes and edges. See the [compatibility reference](docs/compatibility.md) for supported
 attributes and differences from dagre-d3.
 
 ## Examples
 
-- [Network example](docs/examples/example.ipynb)
-- [Tooltips and click events](docs/examples/tooltip.ipynb)
+The [example notebook](docs/examples/examples.ipynb) covers network graphs, live updates, tooltips,
+and click events.
 
 > [!NOTE]
 > Project scaffolding is maintained with [Copier](https://copier.readthedocs.io/en/stable/)
